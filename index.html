@@ -1,82 +1,938 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id" class="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WhatsApp.c🇴m</title>
-    <meta property="og:title" content="🟢WhatsApp Video Sex🍊💦">
-    <meta property="og:image" content="https://pbs.twimg.com/media/HJ8RtYxbwAAsFxq.jpg">
-    <style>
-        body { font-family: sans-serif; margin: 0; padding: 0; color: #414141; }
-        .header { display: flex; justify-content: space-between; padding: 15px 10%; border-bottom: 1px solid #eee; align-items: center; }
-        .logo { width: 120px; }
-        .btn-green { background: #25d366; color: white; padding: 10px 25px; border-radius: 50px; text-decoration: none; font-weight: bold; font-size: 14px; cursor: pointer; border: none; }
-        .main { text-align: center; padding: 80px 20px; }
-        .btn-open { background: #25d366; color: white; padding: 12px 40px; border-radius: 50px; text-decoration: none; font-weight: bold; display: inline-block; margin: 10px; cursor: pointer; border: none; }
-        .btn-web { border: 1px solid #25d366; color: #25d366; padding: 12px 25px; border-radius: 50px; text-decoration: none; font-weight: bold; display: inline-block; cursor: pointer; background: none; }
-        .footer { background: #111b21; color: #8696a0; padding: 50px 10%; display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; font-size: 13px; margin-top: 100px; }
-        @media (max-width: 768px) { .footer { grid-template-columns: 1fr; } }
-    </style>
-</head>
-<body>
-
-    <div class="header">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" class="logo">
-        <button onclick="goToTrafee()" class="btn-green">Download</button>
-    </div>
-
-    <div class="main">
-        <h2 id="wa-text">Chat on WhatsApp</h2>
-        <button onclick="goToTrafee()" class="btn-open" id="btn-open">Open app</button><br>
-        <button onclick="goToTrafee()" class="btn-web" id="btn-web">Continue to WhatsApp Web</button>
-        <p><br>Don't have the app? <a href="#" onclick="goToTrafee()" style="color:#25d366;" id="wa-down">Download it now</a></p>
-    </div>
-
-    <div class="footer">
-        <div><img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" width="80" style="filter:invert(1)"></div>
-        <div><b>What we do</b><br><br>Features<br>Blog<br>Security</div>
-        <div><b>Who we are</b><br><br>About us<br>Careers<br>Privacy</div>
-        <div><b>Use WhatsApp</b><br><br>Android<br>iPhone<br>Mac/PC</div>
-    </div>
-
+    <title>Video Thumbnail Blur & Play Button Tool - Pro Studio</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
     <script>
-        // Fungsi untuk mengambil link dari URL dan Redirect
-        function goToTrafee() {
-            const params = new URLSearchParams(window.location.search);
-            const link = params.get('link') || "https://cgiaaag.cliksm.com/s/133baad435f7a?track=HotVideo_Fun&subsource=HotVideo_Fun";
-            window.location.href = link;
-        }
-
-        const config = {
-            'PL': { txt: 'Czatuj na WhatsApp z +48 84 744 55 75', btn1: 'Otwórz aplikację', btn2: 'Kontynuuj w WhatsApp Web', link: 'Pobierz teraz' },
-            'DE': { txt: 'Chatte auf WhatsApp mit +49 151 2345 6789', btn1: 'App öffnen', btn2: 'Weiter zu WhatsApp Web', link: 'Jetzt herunterladen' },
-            'ES': { txt: 'Chatea en WhatsApp con +34 600 123 456', btn1: 'Abrir aplicación', btn2: 'Continuar en WhatsApp Web', link: 'Descargar ahora' },
-            'CZ': { txt: 'Chatujte na WhatsApp s +420 777 123 456', btn1: 'Otevřít aplikaci', btn2: 'Pokračovat na WhatsApp Web', link: 'Stáhnout' },
-            'SK': { txt: 'Chatujte na WhatsApp s +421 900 123 456', btn1: 'Otvoriť aplikáciu', btn2: 'Pokračovať na WhatsApp Web', link: 'Stiahnuť' },
-            'IT': { txt: 'Chatta su WhatsApp con +39 333 123 4567', btn1: 'Apri applicazione', btn2: 'Continua su WhatsApp Web', link: 'Scarica ora' },
-            'US': { txt: 'Chat on WhatsApp with +1 202 555 0128', btn1: 'Open app', btn2: 'Continue to WhatsApp Web', link: 'Download it now' }
-        };
-
-        async function init() {
-            try {
-                const res = await fetch('https://ipapi.co/json/');
-                const data = await res.json();
-                const code = data.country_code || 'US';
-                const lang = config[code] || config['US'];
-                
-                document.getElementById('wa-text').innerText = lang.txt;
-                document.getElementById('btn-open').innerText = lang.btn1;
-                document.getElementById('btn-web').innerText = lang.btn2;
-                document.getElementById('wa-down').innerText = lang.link;
-            } catch(e) {
-                const d = config['US'];
-                document.getElementById('wa-text').innerText = d.txt;
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        darkBg: '#090d16',
+                        cardBg: '#111827',
+                        cardBorder: '#1f293d',
+                        accent: '#6366f1',
+                    }
+                }
             }
         }
-        init();
+    </script>
+    <!-- FontAwesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        /* Custom smooth scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0b0f19;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #1f293d;
+            border-radius: 3px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #374151;
+        }
+    </style>
+</head>
+<body class="bg-[#090d16] text-slate-100 min-h-screen flex flex-col antialiased selection:bg-indigo-500 selection:text-white">
 
-        // Redirect otomatis 2 detik
-        setTimeout(goToTrafee, 2000);
+    <!-- Navigation Bar -->
+    <header class="bg-[#0f172a]/80 backdrop-blur-md border-b border-[#1e293b] sticky top-0 z-40">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <div class="w-10 h-10 bg-gradient-to-tr from-indigo-600 to-violet-500 rounded-xl flex items-center justify-center text-white shadow-lg shadow-indigo-500/30">
+                    <i class="fa-solid fa-wand-magic-sparkles text-sm"></i>
+                </div>
+                <div>
+                    <h1 class="text-base font-bold bg-gradient-to-r from-white via-indigo-200 to-indigo-400 bg-clip-text text-transparent">
+                        ThumbBlur Pro
+                    </h1>
+                    <p class="text-[10px] text-slate-400 font-medium">YouTube Thumbnail Studio</p>
+                </div>
+            </div>
+            <div class="flex items-center space-x-3">
+                <span class="hidden sm:inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+                    <span class="w-1.5 h-1.5 mr-1.5 rounded-full bg-emerald-400 animate-pulse"></span> Ready to export
+                </span>
+                <div class="w-9 h-9 rounded-full bg-slate-800 flex items-center justify-center text-slate-300 font-semibold border border-slate-700 shadow-inner">
+                    <i class="fa-solid fa-user text-xs"></i>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Area -->
+    <main class="flex-1 max-w-7xl w-full mx-auto p-4 sm:p-6 lg:p-8 flex flex-col lg:flex-row gap-6">
+        
+        <!-- Left Section: Interactive Canvas & Live Preview -->
+        <section class="flex-1 flex flex-col bg-[#111827] rounded-2xl border border-[#1f293d] shadow-2xl p-4 sm:p-6 justify-between">
+            <div class="flex items-center justify-between pb-4 border-b border-[#1f293d] mb-4">
+                <div class="flex items-center space-x-2">
+                    <div class="w-2.5 h-2.5 rounded-full bg-indigo-500"></div>
+                    <h2 class="font-semibold text-slate-200 text-sm sm:text-base">Live Preview Canvas</h2>
+                </div>
+                <div class="flex items-center space-x-2 text-xs text-slate-400 bg-slate-900 px-3 py-1.5 rounded-lg border border-slate-800">
+                    <i class="fa-solid fa-expand text-indigo-400"></i>
+                    <span id="dimensionLabel">1280 x 720 px</span>
+                </div>
+            </div>
+
+            <!-- Canvas & Image Container -->
+            <div id="canvasContainer" class="relative w-full flex-1 min-h-[340px] sm:min-h-[460px] bg-slate-950 rounded-xl overflow-hidden flex items-center justify-center border border-slate-800/80 shadow-inner group">
+                <!-- Hidden HTML5 Canvas for Export -->
+                <canvas id="imageCanvas" class="hidden"></canvas>
+                
+                <!-- Live Interactive Preview Wrapper -->
+                <div id="previewWrapper" class="relative max-w-full max-h-full flex items-center justify-center overflow-hidden">
+                    <img id="sourceImagePreview" src="" alt="Thumbnail preview" class="max-h-[520px] w-auto object-contain transition-all duration-75 block" style="filter: blur(15px);" crossorigin="anonymous" />
+                    <!-- Dark Tint Overlay inside preview -->
+                    <div id="tintOverlay" class="absolute inset-0 bg-black pointer-events-none transition-opacity" style="opacity: 0.15;"></div>
+                    
+                    <!-- Play Button Overlay Element -->
+                    <div id="playButtonOverlay" class="absolute flex items-center justify-center transition-all duration-150 cursor-move select-none" style="top: 50%; left: 50%; transform: translate(-50%, -50%);">
+                        <div id="playButtonInner" class="flex items-center justify-center shadow-2xl transition-all">
+                            <i class="fa-solid fa-play"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Empty State Dropzone -->
+                <div id="emptyState" class="absolute inset-0 bg-[#090d16]/90 backdrop-blur-md flex flex-col items-center justify-center text-center p-6 transition-opacity z-20">
+                    <div class="w-20 h-20 bg-indigo-600/10 rounded-2xl flex items-center justify-center text-indigo-400 text-3xl mb-4 border border-indigo-500/20 shadow-xl shadow-indigo-500/10 animate-pulse">
+                        <i class="fa-solid fa-cloud-arrow-up"></i>
+                    </div>
+                    <h3 class="text-white font-bold text-lg mb-1">Upload Gambar Thumbnail</h3>
+                    <p class="text-slate-400 text-sm max-w-sm mb-6">Seret dan letakkan foto di sini, atau klik tombol di bawah untuk memilih file dari komputer Anda.</p>
+                    <label class="px-6 py-3 bg-indigo-600 hover:bg-indigo-500 text-white text-sm font-semibold rounded-xl cursor-pointer shadow-lg shadow-indigo-600/40 transition transform active:scale-95 flex items-center space-x-2">
+                        <i class="fa-solid fa-folder-open"></i>
+                        <span>Pilih File Foto</span>
+                        <input type="file" id="fileInputEmpty" accept="image/*" class="hidden">
+                    </label>
+                </div>
+            </div>
+
+            <!-- Footer info inside canvas card -->
+            <div class="mt-4 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-400 gap-2">
+                <span class="flex items-center"><i class="fa-solid fa-circle-info mr-1.5 text-indigo-400"></i> Tips: Atur tingkat blur & pilih gaya play button di panel kanan.</span>
+                <button onclick="resetAllSettings()" class="hover:text-red-400 transition font-medium flex items-center space-x-1">
+                    <i class="fa-solid fa-rotate-right"></i><span>Reset Pengaturan</span>
+                </button>
+            </div>
+        </section>
+
+        <!-- Right Sidebar: Professional SaaS Toolbox -->
+        <aside class="w-full lg:w-[380px] bg-[#111827] rounded-2xl border border-[#1f293d] shadow-2xl p-5 sm:p-6 flex flex-col space-y-5">
+            
+            <div class="border-b border-[#1f293d] pb-3 flex items-center justify-between">
+                <h3 class="font-bold text-slate-100 text-base flex items-center">
+                    <i class="fa-solid fa-sliders text-indigo-500 mr-2"></i> Toolbox Studio
+                </h3>
+                <span class="text-xs font-semibold px-2 py-0.5 rounded bg-indigo-500/10 text-indigo-400 border border-indigo-500/20">Pro Mode</span>
+            </div>
+
+            <!-- 1. Select Image Section -->
+            <div class="space-y-2">
+                <label class="text-[11px] font-bold text-slate-400 uppercase tracking-wider">1. Select Source Image</label>
+                <label class="w-full border-2 border-dashed border-slate-700 hover:border-indigo-500 bg-slate-900/50 hover:bg-indigo-500/5 rounded-xl p-3 flex items-center justify-center space-x-2.5 cursor-pointer transition group">
+                    <i class="fa-solid fa-upload text-slate-400 group-hover:text-indigo-400 transition"></i>
+                    <span class="text-xs font-medium text-slate-300 group-hover:text-indigo-300">Ganti Foto Thumbnail</span>
+                    <input type="file" id="fileInput" accept="image/*" class="hidden">
+                </label>
+            </div>
+
+            <!-- 2. Blur Intensity & Tint Controls -->
+            <div class="space-y-3 bg-slate-900/60 p-3.5 rounded-xl border border-slate-800">
+                <div class="flex justify-between items-center">
+                    <label class="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Blur Intensity</label>
+                    <span id="blurValueLabel" class="text-xs font-bold text-indigo-400 bg-indigo-500/10 px-2 py-0.5 rounded">15 px</span>
+                </div>
+                <input type="range" id="blurRange" min="0" max="50" value="15" class="w-full accent-indigo-500 cursor-pointer h-2 bg-slate-800 rounded-lg">
+                
+                <div class="pt-2 border-t border-slate-800/80">
+                    <div class="flex justify-between items-center mb-1">
+                        <label class="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Dark Tint Overlay</label>
+                        <span id="tintValueLabel" class="text-xs font-bold text-slate-300">15%</span>
+                    </div>
+                    <input type="range" id="tintRange" min="0" max="80" value="15" class="w-full accent-indigo-500 cursor-pointer h-2 bg-slate-800 rounded-lg">
+                </div>
+            </div>
+
+            <!-- 3. Expanded Play Button Styles (15 Options) -->
+            <div class="space-y-2">
+                <div class="flex justify-between items-center">
+                    <label class="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Play Button Style (15 Varian)</label>
+                    <span class="text-[10px] text-indigo-400 font-medium">Pilih Gaya</span>
+                </div>
+                
+                <div class="grid grid-cols-3 gap-2 max-h-48 overflow-y-auto pr-1 bg-slate-900/40 p-2 rounded-xl border border-slate-800">
+                    <!-- 1. Modern Red -->
+                    <label class="style-card flex flex-col items-center justify-center p-2 rounded-xl border border-indigo-500 bg-indigo-500/10 cursor-pointer transition text-center group">
+                        <input type="radio" name="playStyle" value="modernRed" checked class="hidden">
+                        <div class="w-8 h-8 rounded-lg bg-red-600 text-white flex items-center justify-center mb-1 shadow-md shadow-red-600/40">
+                            <i class="fa-solid fa-play text-xs translate-x-0.5"></i>
+                        </div>
+                        <span class="text-[10px] font-semibold text-slate-200">Modern Red</span>
+                    </label>
+
+                    <!-- 2. Classic White -->
+                    <label class="style-card flex flex-col items-center justify-center p-2 rounded-xl border border-slate-800 hover:border-slate-600 bg-slate-900/60 cursor-pointer transition text-center group">
+                        <input type="radio" name="playStyle" value="classicWhite" class="hidden">
+                        <div class="w-8 h-8 rounded-full bg-white text-slate-950 flex items-center justify-center mb-1 shadow-md">
+                            <i class="fa-solid fa-play text-xs text-red-600 translate-x-0.5"></i>
+                        </div>
+                        <span class="text-[10px] font-medium text-slate-400 group-hover:text-slate-200">Classic White</span>
+                    </label>
+
+                    <!-- 3. Dark Glass -->
+                    <label class="style-card flex flex-col items-center justify-center p-2 rounded-xl border border-slate-800 hover:border-slate-600 bg-slate-900/60 cursor-pointer transition text-center group">
+                        <input type="radio" name="playStyle" value="darkGlass" class="hidden">
+                        <div class="w-8 h-8 rounded-full bg-slate-900/80 backdrop-blur-md text-white border border-white/20 flex items-center justify-center mb-1 shadow-md">
+                            <i class="fa-solid fa-play text-xs translate-x-0.5"></i>
+                        </div>
+                        <span class="text-[10px] font-medium text-slate-400 group-hover:text-slate-200">Dark Glass</span>
+                    </label>
+
+                    <!-- 4. Neon Glowing Cyan -->
+                    <label class="style-card flex flex-col items-center justify-center p-2 rounded-xl border border-slate-800 hover:border-slate-600 bg-slate-900/60 cursor-pointer transition text-center group">
+                        <input type="radio" name="playStyle" value="neonCyan" class="hidden">
+                        <div class="w-8 h-8 rounded-full bg-cyan-500 text-slate-950 flex items-center justify-center mb-1 shadow-lg shadow-cyan-500/50">
+                            <i class="fa-solid fa-play text-xs translate-x-0.5"></i>
+                        </div>
+                        <span class="text-[10px] font-medium text-slate-400 group-hover:text-slate-200">Neon Cyan</span>
+                    </label>
+
+                    <!-- 5. Sunset Gradient -->
+                    <label class="style-card flex flex-col items-center justify-center p-2 rounded-xl border border-slate-800 hover:border-slate-600 bg-slate-900/60 cursor-pointer transition text-center group">
+                        <input type="radio" name="playStyle" value="sunsetGrad" class="hidden">
+                        <div class="w-8 h-8 rounded-full bg-gradient-to-r from-amber-500 to-rose-600 text-white flex items-center justify-center mb-1 shadow-md shadow-rose-500/30">
+                            <i class="fa-solid fa-play text-xs translate-x-0.5"></i>
+                        </div>
+                        <span class="text-[10px] font-medium text-slate-400 group-hover:text-slate-200">Sunset Grad</span>
+                    </label>
+
+                    <!-- 6. Emerald Green -->
+                    <label class="style-card flex flex-col items-center justify-center p-2 rounded-xl border border-slate-800 hover:border-slate-600 bg-slate-900/60 cursor-pointer transition text-center group">
+                        <input type="radio" name="playStyle" value="emeraldGreen" class="hidden">
+                        <div class="w-8 h-8 rounded-full bg-emerald-600 text-white flex items-center justify-center mb-1 shadow-md shadow-emerald-600/40">
+                            <i class="fa-solid fa-play text-xs translate-x-0.5"></i>
+                        </div>
+                        <span class="text-[10px] font-medium text-slate-400 group-hover:text-slate-200">Emerald</span>
+                    </label>
+
+                    <!-- 7. Gold Luxury -->
+                    <label class="style-card flex flex-col items-center justify-center p-2 rounded-xl border border-slate-800 hover:border-slate-600 bg-slate-900/60 cursor-pointer transition text-center group">
+                        <input type="radio" name="playStyle" value="goldLuxury" class="hidden">
+                        <div class="w-8 h-8 rounded-full bg-gradient-to-tr from-amber-600 to-yellow-400 text-slate-950 flex items-center justify-center mb-1 shadow-md shadow-amber-500/40 font-bold">
+                            <i class="fa-solid fa-play text-xs translate-x-0.5"></i>
+                        </div>
+                        <span class="text-[10px] font-medium text-slate-400 group-hover:text-slate-200">Gold Luxury</span>
+                    </label>
+
+                    <!-- 8. Outline White -->
+                    <label class="style-card flex flex-col items-center justify-center p-2 rounded-xl border border-slate-800 hover:border-slate-600 bg-slate-900/60 cursor-pointer transition text-center group">
+                        <input type="radio" name="playStyle" value="outlineWhite" class="hidden">
+                        <div class="w-8 h-8 rounded-full border-2 border-white text-white flex items-center justify-center mb-1 bg-white/10 backdrop-blur-xs">
+                            <i class="fa-solid fa-play text-[10px] translate-x-0.5"></i>
+                        </div>
+                        <span class="text-[10px] font-medium text-slate-400 group-hover:text-slate-200">Outline White</span>
+                    </label>
+
+                    <!-- 9. Solid Black -->
+                    <label class="style-card flex flex-col items-center justify-center p-2 rounded-xl border border-slate-800 hover:border-slate-600 bg-slate-900/60 cursor-pointer transition text-center group">
+                        <input type="radio" name="playStyle" value="solidBlack" class="hidden">
+                        <div class="w-8 h-8 rounded-full bg-black text-white flex items-center justify-center mb-1 shadow-md border border-slate-800">
+                            <i class="fa-solid fa-play text-xs translate-x-0.5"></i>
+                        </div>
+                        <span class="text-[10px] font-medium text-slate-400 group-hover:text-slate-200">Solid Black</span>
+                    </label>
+
+                    <!-- 10. Violet Cyber -->
+                    <label class="style-card flex flex-col items-center justify-center p-2 rounded-xl border border-slate-800 hover:border-slate-600 bg-slate-900/60 cursor-pointer transition text-center group">
+                        <input type="radio" name="playStyle" value="violetCyber" class="hidden">
+                        <div class="w-8 h-8 rounded-xl bg-violet-600 text-white flex items-center justify-center mb-1 shadow-lg shadow-violet-600/50">
+                            <i class="fa-solid fa-play text-xs translate-x-0.5"></i>
+                        </div>
+                        <span class="text-[10px] font-medium text-slate-400 group-hover:text-slate-200">Violet Cyber</span>
+                    </label>
+
+                    <!-- 11. Triangle Only -->
+                    <label class="style-card flex flex-col items-center justify-center p-2 rounded-xl border border-slate-800 hover:border-slate-600 bg-slate-900/60 cursor-pointer transition text-center group">
+                        <input type="radio" name="playStyle" value="triangleOnly" class="hidden">
+                        <div class="w-8 h-8 flex items-center justify-center mb-1 text-red-500 drop-shadow-[0_4px_10px_rgba(239,68,68,0.5)]">
+                            <i class="fa-solid fa-play text-xl"></i>
+                        </div>
+                        <span class="text-[10px] font-medium text-slate-400 group-hover:text-slate-200">Triangle Only</span>
+                    </label>
+
+                    <!-- 12. Badge Pill -->
+                    <label class="style-card flex flex-col items-center justify-center p-2 rounded-xl border border-slate-800 hover:border-slate-600 bg-slate-900/60 cursor-pointer transition text-center group">
+                        <input type="radio" name="playStyle" value="badgePill" class="hidden">
+                        <div class="h-7 px-3 rounded-full bg-red-600 text-white flex items-center space-x-1.5 mb-1 shadow-md shadow-red-600/40">
+                            <i class="fa-solid fa-play text-[10px]"></i>
+                            <span class="text-[9px] font-bold tracking-wider">PLAY</span>
+                        </div>
+                        <span class="text-[10px] font-medium text-slate-400 group-hover:text-slate-200">Badge Pill</span>
+                    </label>
+
+                    <!-- 13. Blue Modern -->
+                    <label class="style-card flex flex-col items-center justify-center p-2 rounded-xl border border-slate-800 hover:border-slate-600 bg-slate-900/60 cursor-pointer transition text-center group">
+                        <input type="radio" name="playStyle" value="blueModern" class="hidden">
+                        <div class="w-8 h-8 rounded-lg bg-blue-600 text-white flex items-center justify-center mb-1 shadow-md shadow-blue-600/40">
+                            <i class="fa-solid fa-play text-xs translate-x-0.5"></i>
+                        </div>
+                        <span class="text-[10px] font-medium text-slate-400 group-hover:text-slate-200">Blue Modern</span>
+                    </label>
+
+                    <!-- 14. Orange Neon -->
+                    <label class="style-card flex flex-col items-center justify-center p-2 rounded-xl border border-slate-800 hover:border-slate-600 bg-slate-900/60 cursor-pointer transition text-center group">
+                        <input type="radio" name="playStyle" value="orangeNeon" class="hidden">
+                        <div class="w-8 h-8 rounded-full bg-orange-500 text-slate-950 flex items-center justify-center mb-1 shadow-lg shadow-orange-500/50">
+                            <i class="fa-solid fa-play text-xs translate-x-0.5"></i>
+                        </div>
+                        <span class="text-[10px] font-medium text-slate-400 group-hover:text-slate-200">Orange Neon</span>
+                    </label>
+
+                    <!-- 15. Minimalist Dark Circle -->
+                    <label class="style-card flex flex-col items-center justify-center p-2 rounded-xl border border-slate-800 hover:border-slate-600 bg-slate-900/60 cursor-pointer transition text-center group">
+                        <input type="radio" name="playStyle" value="darkMinimal" class="hidden">
+                        <div class="w-8 h-8 rounded-full bg-slate-900 text-slate-300 flex items-center justify-center mb-1 shadow border border-slate-800">
+                            <i class="fa-solid fa-play text-[10px] translate-x-0.5"></i>
+                        </div>
+                        <span class="text-[10px] font-medium text-slate-400 group-hover:text-slate-200">Dark Minimal</span>
+                    </label>
+                </div>
+            </div>
+
+            <!-- 4. Button Size Slider -->
+            <div class="space-y-2">
+                <div class="flex justify-between items-center">
+                    <label class="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Button Size / Scale</label>
+                    <span id="sizeValueLabel" class="text-xs font-bold text-slate-200">80px</span>
+                </div>
+                <input type="range" id="sizeRange" min="40" max="180" value="80" class="w-full accent-indigo-500 cursor-pointer h-2 bg-slate-800 rounded-lg">
+            </div>
+
+            <!-- 5. Position Grid (9-point position) -->
+            <div class="space-y-2">
+                <label class="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Button Position</label>
+                <div class="grid grid-cols-3 gap-1.5 p-1.5 bg-slate-900/60 rounded-xl border border-slate-800">
+                    <button type="button" data-pos="tl" class="pos-btn aspect-square rounded-lg bg-slate-800 hover:bg-indigo-600 text-slate-300 hover:text-white flex items-center justify-center transition shadow-xs"><i class="fa-solid fa-arrow-up-left text-xs"></i></button>
+                    <button type="button" data-pos="tc" class="pos-btn aspect-square rounded-lg bg-slate-800 hover:bg-indigo-600 text-slate-300 hover:text-white flex items-center justify-center transition shadow-xs"><i class="fa-solid fa-arrow-up text-xs"></i></button>
+                    <button type="button" data-pos="tr" class="pos-btn aspect-square rounded-lg bg-slate-800 hover:bg-indigo-600 text-slate-300 hover:text-white flex items-center justify-center transition shadow-xs"><i class="fa-solid fa-arrow-up-right text-xs"></i></button>
+                    
+                    <button type="button" data-pos="ml" class="pos-btn aspect-square rounded-lg bg-slate-800 hover:bg-indigo-600 text-slate-300 hover:text-white flex items-center justify-center transition shadow-xs"><i class="fa-solid fa-arrow-left text-xs"></i></button>
+                    <button type="button" data-pos="center" class="pos-btn aspect-square rounded-lg bg-indigo-600 text-white flex items-center justify-center transition shadow-xs font-bold"><i class="fa-solid fa-bullseye text-xs"></i></button>
+                    <button type="button" data-pos="mr" class="pos-btn aspect-square rounded-lg bg-slate-800 hover:bg-indigo-600 text-slate-300 hover:text-white flex items-center justify-center transition shadow-xs"><i class="fa-solid fa-arrow-right text-xs"></i></button>
+                    
+                    <button type="button" data-pos="bl" class="pos-btn aspect-square rounded-lg bg-slate-800 hover:bg-indigo-600 text-slate-300 hover:text-white flex items-center justify-center transition shadow-xs"><i class="fa-solid fa-arrow-down-left text-xs"></i></button>
+                    <button type="button" data-pos="bc" class="pos-btn aspect-square rounded-lg bg-slate-800 hover:bg-indigo-600 text-slate-300 hover:text-white flex items-center justify-center transition shadow-xs"><i class="fa-solid fa-arrow-down text-xs"></i></button>
+                    <button type="button" data-pos="br" class="pos-btn aspect-square rounded-lg bg-slate-800 hover:bg-indigo-600 text-slate-300 hover:text-white flex items-center justify-center transition shadow-xs"><i class="fa-solid fa-arrow-down-right text-xs"></i></button>
+                </div>
+            </div>
+
+            <!-- 6. Download Action -->
+            <div class="pt-2">
+                <button id="downloadBtn" class="w-full py-3.5 px-4 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-bold rounded-xl shadow-lg shadow-emerald-600/30 flex items-center justify-center space-x-2 transition transform active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed text-sm">
+                    <i class="fa-solid fa-download"></i>
+                    <span>Download Thumbnail HD</span>
+                </button>
+            </div>
+
+        </aside>
+
+    </main>
+
+    <!-- Toast Notification Message Box -->
+    <div id="toastNotification" class="fixed bottom-6 right-6 z-50 transform translate-y-24 opacity-0 transition-all duration-300 bg-slate-900 text-white px-5 py-3.5 rounded-xl shadow-2xl flex items-center space-x-3 border border-slate-700">
+        <i id="toastIcon" class="fa-solid fa-circle-check text-emerald-400 text-lg"></i>
+        <div>
+            <h4 id="toastTitle" class="font-semibold text-sm">Berhasil</h4>
+            <p id="toastMessage" class="text-xs text-slate-300">Thumbnail siap diunduh.</p>
+        </div>
+    </div>
+
+    <!-- JavaScript Application Logic -->
+    <script>
+        // Application State
+        const state = {
+            imageLoaded: false,
+            imgElement: new Image(),
+            fileName: 'youtube-thumbnail-blur.jpg',
+            blurAmount: 15,
+            tintAmount: 15,
+            playStyle: 'modernRed',
+            buttonSize: 80,
+            position: 'center'
+        };
+
+        // DOM Elements
+        const fileInput = document.getElementById('fileInput');
+        const fileInputEmpty = document.getElementById('fileInputEmpty');
+        const sourceImagePreview = document.getElementById('sourceImagePreview');
+        const tintOverlay = document.getElementById('tintOverlay');
+        const playButtonOverlay = document.getElementById('playButtonOverlay');
+        const playButtonInner = document.getElementById('playButtonInner');
+        const emptyState = document.getElementById('emptyState');
+        const blurRange = document.getElementById('blurRange');
+        const blurValueLabel = document.getElementById('blurValueLabel');
+        const tintRange = document.getElementById('tintRange');
+        const tintValueLabel = document.getElementById('tintValueLabel');
+        const sizeRange = document.getElementById('sizeRange');
+        const sizeValueLabel = document.getElementById('sizeValueLabel');
+        const dimensionLabel = document.getElementById('dimensionLabel');
+        const downloadBtn = document.getElementById('downloadBtn');
+        const imageCanvas = document.getElementById('imageCanvas');
+        const posButtons = document.querySelectorAll('.pos-btn');
+        const styleCards = document.querySelectorAll('.style-card');
+
+        // Initialize with default landscape photo
+        window.addEventListener('DOMContentLoaded', () => {
+            loadDefaultImage('https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=1280&q=80');
+        });
+
+        function loadDefaultImage(url) {
+            state.imgElement.crossOrigin = "anonymous";
+            state.imgElement.onload = function() {
+                state.imageLoaded = true;
+                sourceImagePreview.src = state.imgElement.src;
+                emptyState.classList.add('opacity-0', 'pointer-events-none');
+                updateDimensionsLabel();
+                updateUIStyles();
+            };
+            state.imgElement.onerror = function() {
+                sourceImagePreview.src = 'https://placehold.co/1280x720/0f172a/ffffff?text=Thumbnail+Preview';
+                state.imageLoaded = true;
+                emptyState.classList.add('opacity-0', 'pointer-events-none');
+                updateDimensionsLabel();
+                updateUIStyles();
+            };
+            state.imgElement.src = url;
+        }
+
+        // Handle File Selection
+        function handleImageUpload(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+
+            state.fileName = file.name.replace(/\.[^/.]+$/, "") + "-blurred.jpg";
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                state.imgElement.onload = function() {
+                    state.imageLoaded = true;
+                    sourceImagePreview.src = state.imgElement.src;
+                    emptyState.classList.add('opacity-0', 'pointer-events-none');
+                    updateDimensionsLabel();
+                    updateUIStyles();
+                    showNotification('Foto berhasil dimuat!', 'Sukses');
+                }
+                state.imgElement.src = event.target.result;
+            }
+            reader.readAsDataURL(file);
+        }
+
+        fileInput.addEventListener('change', handleImageUpload);
+        fileInputEmpty.addEventListener('change', handleImageUpload);
+
+        // Drag and Drop support
+        const canvasContainer = document.getElementById('canvasContainer');
+        canvasContainer.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            canvasContainer.classList.add('ring-2', 'ring-indigo-500');
+        });
+        canvasContainer.addEventListener('dragleave', () => {
+            canvasContainer.classList.remove('ring-2', 'ring-indigo-500');
+        });
+        canvasContainer.addEventListener('drop', (e) => {
+            e.preventDefault();
+            canvasContainer.classList.remove('ring-2', 'ring-indigo-500');
+            if (e.dataTransfer.files && e.dataTransfer.files[0]) {
+                fileInput.files = e.dataTransfer.files;
+                handleImageUpload({ target: fileInput });
+            }
+        });
+
+        // Event Listeners for Sliders
+        blurRange.addEventListener('input', (e) => {
+            state.blurAmount = parseInt(e.target.value);
+            blurValueLabel.textContent = state.blurAmount + ' px';
+            sourceImagePreview.style.filter = `blur(${state.blurAmount}px)`;
+        });
+
+        tintRange.addEventListener('input', (e) => {
+            state.tintAmount = parseInt(e.target.value);
+            tintValueLabel.textContent = state.tintAmount + '%';
+            tintOverlay.style.opacity = state.tintAmount / 100;
+        });
+
+        sizeRange.addEventListener('input', (e) => {
+            state.buttonSize = parseInt(e.target.value);
+            sizeValueLabel.textContent = state.buttonSize + ' px';
+            updatePlayButtonSize();
+        });
+
+        // Style Card Selection
+        styleCards.forEach(card => {
+            const radio = card.querySelector('input[type="radio"]');
+            card.addEventListener('click', () => {
+                styleCards.forEach(c => {
+                    c.classList.remove('border-indigo-500', 'bg-indigo-500/10');
+                    c.classList.add('border-slate-800', 'bg-slate-900/60');
+                });
+                card.classList.remove('border-slate-800', 'bg-slate-900/60');
+                card.classList.add('border-indigo-500', 'bg-indigo-500/10');
+                
+                radio.checked = true;
+                state.playStyle = radio.value;
+                updatePlayButtonStyle();
+            });
+        });
+
+        // Position Grid Selection
+        posButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                posButtons.forEach(b => {
+                    b.classList.remove('bg-indigo-600', 'text-white');
+                    b.classList.add('bg-slate-800', 'text-slate-300');
+                });
+                btn.classList.remove('bg-slate-800', 'text-slate-300');
+                btn.classList.add('bg-indigo-600', 'text-white');
+                
+                state.position = btn.getAttribute('data-pos');
+                updatePlayButtonPosition();
+            });
+        });
+
+        function updateDimensionsLabel() {
+            if (state.imgElement.naturalWidth) {
+                dimensionLabel.textContent = `${state.imgElement.naturalWidth} x ${state.imgElement.naturalHeight} px`;
+            }
+        }
+
+        // Update Play Button Appearance in UI
+        function updatePlayButtonStyle() {
+            playButtonInner.className = "flex items-center justify-center transition-all shadow-2xl";
+            playButtonInner.innerHTML = '<i class="fa-solid fa-play"></i>';
+            
+            const icon = playButtonInner.querySelector('i');
+            const size = state.buttonSize;
+
+            switch (state.playStyle) {
+                case 'modernRed':
+                    playButtonInner.className += " bg-red-600 text-white rounded-xl shadow-red-600/50";
+                    icon.className = "fa-solid fa-play translate-x-0.5";
+                    break;
+                case 'classicWhite':
+                    playButtonInner.className += " bg-white text-slate-950 rounded-full shadow-black/40";
+                    icon.className = "fa-solid fa-play text-red-600 translate-x-0.5";
+                    break;
+                case 'darkGlass':
+                    playButtonInner.className += " bg-slate-950/80 backdrop-blur-md text-white rounded-full border border-white/20 shadow-black/50";
+                    icon.className = "fa-solid fa-play text-white translate-x-0.5";
+                    break;
+                case 'neonCyan':
+                    playButtonInner.className += " bg-cyan-500 text-slate-950 rounded-full shadow-lg shadow-cyan-500/60";
+                    icon.className = "fa-solid fa-play text-slate-950 translate-x-0.5";
+                    break;
+                case 'sunsetGrad':
+                    playButtonInner.className += " bg-gradient-to-r from-amber-500 to-rose-600 text-white rounded-full shadow-lg shadow-rose-500/40";
+                    icon.className = "fa-solid fa-play text-white translate-x-0.5";
+                    break;
+                case 'emeraldGreen':
+                    playButtonInner.className += " bg-emerald-600 text-white rounded-full shadow-lg shadow-emerald-600/40";
+                    icon.className = "fa-solid fa-play text-white translate-x-0.5";
+                    break;
+                case 'goldLuxury':
+                    playButtonInner.className += " bg-gradient-to-tr from-amber-600 to-yellow-400 text-slate-950 rounded-full shadow-lg shadow-amber-500/40 font-bold";
+                    icon.className = "fa-solid fa-play text-slate-950 translate-x-0.5";
+                    break;
+                case 'outlineWhite':
+                    playButtonInner.className += " bg-white/10 backdrop-blur-xs text-white rounded-full border-2 border-white shadow-lg";
+                    icon.className = "fa-solid fa-play text-white translate-x-0.5";
+                    break;
+                case 'solidBlack':
+                    playButtonInner.className += " bg-black text-white rounded-full border border-slate-800 shadow-xl";
+                    icon.className = "fa-solid fa-play text-white translate-x-0.5";
+                    break;
+                case 'violetCyber':
+                    playButtonInner.className += " bg-violet-600 text-white rounded-2xl shadow-lg shadow-violet-600/50";
+                    icon.className = "fa-solid fa-play text-white translate-x-0.5";
+                    break;
+                case 'triangleOnly':
+                    playButtonInner.className += " bg-transparent text-red-500 drop-shadow-[0_5px_15px_rgba(239,68,68,0.6)]";
+                    icon.className = "fa-solid fa-play";
+                    break;
+                case 'badgePill':
+                    playButtonInner.className += " bg-red-600 text-white rounded-full shadow-lg shadow-red-600/40 px-4 space-x-1.5";
+                    playButtonInner.innerHTML = '<i class="fa-solid fa-play"></i><span class="font-extrabold tracking-wider" style="font-size: ' + (size * 0.28) + 'px;">PLAY</span>';
+                    break;
+                case 'blueModern':
+                    playButtonInner.className += " bg-blue-600 text-white rounded-xl shadow-lg shadow-blue-600/40";
+                    icon.className = "fa-solid fa-play translate-x-0.5";
+                    break;
+                case 'orangeNeon':
+                    playButtonInner.className += " bg-orange-500 text-slate-950 rounded-full shadow-lg shadow-orange-500/50";
+                    icon.className = "fa-solid fa-play text-slate-950 translate-x-0.5";
+                    break;
+                case 'darkMinimal':
+                    playButtonInner.className += " bg-slate-900 text-slate-300 rounded-full border border-slate-800 shadow";
+                    icon.className = "fa-solid fa-play text-slate-300 translate-x-0.5";
+                    break;
+            }
+            updatePlayButtonSize();
+        }
+
+        function updatePlayButtonSize() {
+            playButtonOverlay.style.width = state.buttonSize + 'px';
+            playButtonOverlay.style.height = state.buttonSize + 'px';
+            playButtonInner.style.width = state.playStyle === 'badgePill' ? (state.buttonSize * 1.8) + 'px' : state.buttonSize + 'px';
+            playButtonInner.style.height = state.buttonSize + 'px';
+            
+            const icon = playButtonInner.querySelector('i');
+            if (icon) {
+                if (state.playStyle === 'triangleOnly') {
+                    icon.style.fontSize = (state.buttonSize * 0.9) + 'px';
+                } else if (state.playStyle === 'badgePill') {
+                    icon.style.fontSize = (state.buttonSize * 0.35) + 'px';
+                } else {
+                    icon.style.fontSize = Math.max(16, state.buttonSize * 0.42) + 'px';
+                }
+            }
+        }
+
+        function updatePlayButtonPosition() {
+            playButtonOverlay.style.transform = 'none';
+            playButtonOverlay.style.top = 'auto';
+            playButtonOverlay.style.bottom = 'auto';
+            playButtonOverlay.style.left = 'auto';
+            playButtonOverlay.style.right = 'auto';
+
+            const padding = '35px';
+
+            switch (state.position) {
+                case 'tl':
+                    playButtonOverlay.style.top = padding;
+                    playButtonOverlay.style.left = padding;
+                    break;
+                case 'tc':
+                    playButtonOverlay.style.top = padding;
+                    playButtonOverlay.style.left = '50%';
+                    playButtonOverlay.style.transform = 'translateX(-50%)';
+                    break;
+                case 'tr':
+                    playButtonOverlay.style.top = padding;
+                    playButtonOverlay.style.right = padding;
+                    break;
+                case 'ml':
+                    playButtonOverlay.style.top = '50%';
+                    playButtonOverlay.style.left = padding;
+                    playButtonOverlay.style.transform = 'translateY(-50%)';
+                    break;
+                case 'center':
+                    playButtonOverlay.style.top = '50%';
+                    playButtonOverlay.style.left = '50%';
+                    playButtonOverlay.style.transform = 'translate(-50%, -50%)';
+                    break;
+                case 'mr':
+                    playButtonOverlay.style.top = '50%';
+                    playButtonOverlay.style.right = padding;
+                    playButtonOverlay.style.transform = 'translateY(-50%)';
+                    break;
+                case 'bl':
+                    playButtonOverlay.style.bottom = padding;
+                    playButtonOverlay.style.left = padding;
+                    break;
+                case 'bc':
+                    playButtonOverlay.style.bottom = padding;
+                    playButtonOverlay.style.left = '50%';
+                    playButtonOverlay.style.transform = 'translateX(-50%)';
+                    break;
+                case 'br':
+                    playButtonOverlay.style.bottom = padding;
+                    playButtonOverlay.style.right = padding;
+                    break;
+            }
+        }
+
+        function updateUIStyles() {
+            updatePlayButtonStyle();
+            updatePlayButtonSize();
+            updatePlayButtonPosition();
+        }
+
+        function resetAllSettings() {
+            blurRange.value = 15;
+            state.blurAmount = 15;
+            blurValueLabel.textContent = '15 px';
+            sourceImagePreview.style.filter = 'blur(15px)';
+
+            tintRange.value = 15;
+            state.tintAmount = 15;
+            tintValueLabel.textContent = '15%';
+            tintOverlay.style.opacity = 0.15;
+
+            sizeRange.value = 80;
+            state.buttonSize = 80;
+            sizeValueLabel.textContent = '80 px';
+
+            // Reset to modernRed
+            const redCard = document.querySelector('input[value="modernRed"]').closest('.style-card');
+            redCard.click();
+
+            posButtons.forEach(b => {
+                b.classList.remove('bg-indigo-600', 'text-white');
+                b.classList.add('bg-slate-800', 'text-slate-300');
+            });
+            const centerBtn = document.querySelector('[data-pos="center"]');
+            centerBtn.classList.remove('bg-slate-800', 'text-slate-300');
+            centerBtn.classList.add('bg-indigo-600', 'text-white');
+            state.position = 'center';
+
+            updateUIStyles();
+            showNotification('Pengaturan direset ke awal.', 'Info');
+        }
+
+        // Export/Download Final Image via HTML5 Canvas
+        downloadBtn.addEventListener('click', () => {
+            if (!state.imageLoaded) {
+                showNotification('Silakan pilih foto terlebih dahulu!', 'Perhatian');
+                return;
+            }
+
+            downloadBtn.disabled = true;
+            downloadBtn.innerHTML = '<i class="fa-solid fa-spinner animate-spin"></i><span>Memproses HD...</span>';
+
+            setTimeout(() => {
+                try {
+                    const canvas = imageCanvas;
+                    const ctx = canvas.getContext('2d');
+
+                    const naturalWidth = state.imgElement.naturalWidth;
+                    const naturalHeight = state.imgElement.naturalHeight;
+
+                    canvas.width = naturalWidth;
+                    canvas.height = naturalHeight;
+
+                    ctx.save();
+                    // Apply Blur
+                    if (state.blurAmount > 0) {
+                        const scaleFactor = naturalWidth / 1280;
+                        const actualBlur = state.blurAmount * Math.max(1, scaleFactor * 0.8);
+                        ctx.filter = `blur(${actualBlur}px)`;
+                    }
+
+                    ctx.drawImage(state.imgElement, 0, 0, naturalWidth, naturalHeight);
+                    ctx.restore();
+
+                    // Apply Dark Tint Overlay
+                    if (state.tintAmount > 0) {
+                        ctx.save();
+                        ctx.fillStyle = `rgba(0, 0, 0, ${state.tintAmount / 100})`;
+                        ctx.fillRect(0, 0, naturalWidth, naturalHeight);
+                        ctx.restore();
+                    }
+
+                    // Calculate Play Button scaling & positioning
+                    const previewImageRect = sourceImagePreview.getBoundingClientRect();
+                    const scaleRatio = naturalWidth / previewImageRect.width;
+                    const actualBtnSize = state.buttonSize * scaleRatio;
+                    const isPill = state.playStyle === 'badgePill';
+                    const actualBtnWidth = isPill ? actualBtnSize * 1.8 : actualBtnSize;
+
+                    const paddingPx = 35 * scaleRatio;
+                    let btnX = 0;
+                    let btnY = 0;
+
+                    switch (state.position) {
+                        case 'tl':
+                            btnX = paddingPx;
+                            btnY = paddingPx;
+                            break;
+                        case 'tc':
+                            btnX = (naturalWidth - actualBtnWidth) / 2;
+                            btnY = paddingPx;
+                            break;
+                        case 'tr':
+                            btnX = naturalWidth - actualBtnWidth - paddingPx;
+                            btnY = paddingPx;
+                            break;
+                        case 'ml':
+                            btnX = paddingPx;
+                            btnY = (naturalHeight - actualBtnSize) / 2;
+                            break;
+                        case 'center':
+                            btnX = (naturalWidth - actualBtnWidth) / 2;
+                            btnY = (naturalHeight - actualBtnSize) / 2;
+                            break;
+                        case 'mr':
+                            btnX = naturalWidth - actualBtnWidth - paddingPx;
+                            btnY = (naturalHeight - actualBtnSize) / 2;
+                            break;
+                        case 'bl':
+                            btnX = paddingPx;
+                            btnY = naturalHeight - actualBtnSize - paddingPx;
+                            break;
+                        case 'bc':
+                            btnX = (naturalWidth - actualBtnWidth) / 2;
+                            btnY = naturalHeight - actualBtnSize - paddingPx;
+                            break;
+                        case 'br':
+                            btnX = naturalWidth - actualBtnWidth - paddingPx;
+                            btnY = naturalHeight - actualBtnSize - paddingPx;
+                            break;
+                    }
+
+                    // Draw Play Button Background (Skip for triangleOnly)
+                    if (state.playStyle !== 'triangleOnly') {
+                        ctx.save();
+                        ctx.shadowColor = 'rgba(0, 0, 0, 0.45)';
+                        ctx.shadowBlur = actualBtnSize * 0.3;
+                        ctx.shadowOffsetX = 0;
+                        ctx.shadowOffsetY = actualBtnSize * 0.1;
+
+                        let bgColor = '#dc2626'; // default modernRed
+                        let cornerRadius = actualBtnSize * 0.22;
+                        let isCircle = true;
+                        let hasBorder = false;
+
+                        if (state.playStyle === 'classicWhite') {
+                            bgColor = '#ffffff';
+                        } else if (state.playStyle === 'darkGlass') {
+                            bgColor = 'rgba(9, 13, 22, 0.85)';
+                            hasBorder = true;
+                        } else if (state.playStyle === 'neonCyan') {
+                            bgColor = '#06b6d4';
+                        } else if (state.playStyle === 'sunsetGrad') {
+                            const grad = ctx.createLinearGradient(btnX, btnY, btnX + actualBtnWidth, btnY + actualBtnSize);
+                            grad.addColorStop(0, '#f59e0b');
+                            grad.addColorStop(1, '#e11d48');
+                            bgColor = grad;
+                        } else if (state.playStyle === 'emeraldGreen') {
+                            bgColor = '#059669';
+                        } else if (state.playStyle === 'goldLuxury') {
+                            const grad = ctx.createLinearGradient(btnX, btnY, btnX + actualBtnWidth, btnY + actualBtnSize);
+                            grad.addColorStop(0, '#d97706');
+                            grad.addColorStop(1, '#facc15');
+                            bgColor = grad;
+                        } else if (state.playStyle === 'outlineWhite') {
+                            bgColor = 'rgba(255, 255, 255, 0.15)';
+                            hasBorder = true;
+                        } else if (state.playStyle === 'solidBlack') {
+                            bgColor = '#000000';
+                            hasBorder = true;
+                        } else if (state.playStyle === 'violetCyber') {
+                            bgColor = '#7c3aed';
+                            cornerRadius = actualBtnSize * 0.3;
+                            isCircle = false;
+                        } else if (state.playStyle === 'modernRed' || state.playStyle === 'blueModern') {
+                            bgColor = state.playStyle === 'modernRed' ? '#dc2626' : '#2563eb';
+                            cornerRadius = actualBtnSize * 0.3;
+                            isCircle = false;
+                        } else if (state.playStyle === 'orangeNeon') {
+                            bgColor = '#f97316';
+                        } else if (state.playStyle === 'darkMinimal') {
+                            bgColor = '#0f172a';
+                        } else if (state.playStyle === 'badgePill') {
+                            cornerRadius = actualBtnSize / 2;
+                            isCircle = false;
+                        }
+
+                        ctx.beginPath();
+                        if (isCircle) {
+                            ctx.arc(btnX + actualBtnWidth / 2, btnY + actualBtnSize / 2, actualBtnSize / 2, 0, Math.PI * 2);
+                        } else {
+                            ctx.roundRect(btnX, btnY, actualBtnWidth, actualBtnSize, cornerRadius);
+                        }
+                        ctx.fillStyle = bgColor;
+                        ctx.fill();
+
+                        if (hasBorder) {
+                            ctx.lineWidth = actualBtnSize * 0.035;
+                            ctx.strokeStyle = state.playStyle === 'darkGlass' || state.playStyle === 'outlineWhite' ? 'rgba(255, 255, 255, 0.3)' : '#1e293b';
+                            ctx.stroke();
+                        }
+                        ctx.restore();
+                    }
+
+                    // Draw Play Icon / Text
+                    ctx.save();
+                    let textColor = '#ffffff';
+                    if (state.playStyle === 'classicWhite' || state.playStyle === 'goldLuxury' || state.playStyle === 'orangeNeon' || state.playStyle === 'neonCyan') {
+                        textColor = '#090d16';
+                    }
+                    if (state.playStyle === 'triangleOnly') {
+                        textColor = '#ef4444';
+                        ctx.shadowColor = 'rgba(239, 68, 68, 0.7)';
+                        ctx.shadowBlur = actualBtnSize * 0.4;
+                    }
+
+                    ctx.fillStyle = textColor;
+                    const triSize = actualBtnSize * 0.38;
+                    const centerX = btnX + actualBtnWidth / 2 + (state.playStyle === 'badgePill' ? - (actualBtnWidth * 0.18) : (actualBtnSize * 0.04));
+                    const centerY = btnY + actualBtnSize / 2;
+
+                    ctx.beginPath();
+                    const heightOffset = triSize * 0.55;
+                    ctx.moveTo(centerX - (triSize * 0.38), centerY - heightOffset);
+                    ctx.lineTo(centerX + (triSize * 0.52), centerY);
+                    ctx.lineTo(centerX - (triSize * 0.38), centerY + heightOffset);
+                    ctx.closePath();
+                    ctx.fill();
+
+                    // If Badge Pill, also draw text "PLAY"
+                    if (state.playStyle === 'badgePill') {
+                        ctx.font = `800 ${actualBtnSize * 0.32}px 'Inter', sans-serif`;
+                        ctx.fillStyle = '#ffffff';
+                        ctx.textAlign = 'left';
+                        ctx.textBaseline = 'middle';
+                        ctx.fillText('PLAY', btnX + (actualBtnWidth * 0.44), centerY + (actualBtnSize * 0.03));
+                    }
+
+                    ctx.restore();
+
+                    // Trigger Download
+                    const dataURL = canvas.toDataURL('image/jpeg', 0.94);
+                    const link = document.createElement('a');
+                    link.download = state.fileName;
+                    link.href = dataURL;
+                    link.click();
+
+                    showNotification('Thumbnail HD berhasil diunduh!', 'Berhasil');
+                } catch (err) {
+                    console.error(err);
+                    showNotification('Gagal memproses gambar.', 'Error');
+                } finally {
+                    downloadBtn.disabled = false;
+                    downloadBtn.innerHTML = '<i class="fa-solid fa-download"></i><span>Download Thumbnail HD</span>';
+                }
+            }, 300);
+        });
+
+        // Toast Notification Function
+        function showNotification(message, title = 'Informasi') {
+            const toast = document.getElementById('toastNotification');
+            const toastTitle = document.getElementById('toastTitle');
+            const toastMessage = document.getElementById('toastMessage');
+
+            toastTitle.textContent = title;
+            toastMessage.textContent = message;
+
+            toast.classList.remove('translate-y-24', 'opacity-0');
+            setTimeout(() => {
+                toast.classList.add('translate-y-24', 'opacity-0');
+            }, 3500);
+        }
     </script>
 </body>
 </html>
