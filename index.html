@@ -1,905 +1,407 @@
 <!DOCTYPE html>
-<html lang="id" class="dark">
+<html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Video Thumbnail Blur & Play Button Tool - Pro Studio</title>
-    <!-- Tailwind CSS CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            darkMode: 'class',
-            theme: {
-                extend: {
-                    colors: {
-                        darkBg: '#090d16',
-                        cardBg: '#111827',
-                        cardBorder: '#1f293d',
-                        accent: '#6366f1',
-                    }
-                }
-            }
-        }
-    </script>
-    <!-- FontAwesome for icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Google Fonts Inter -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <title>Pro Play Button Studio v2.0</title>
     <style>
+        :root {
+            --primary: #2563eb;
+            --primary-hover: #1d4ed8;
+            --bg: #0b0f19;
+            --card-bg: #111827;
+            --text: #f8fafc;
+            --text-muted: #94a3b8;
+            --border: #1f2937;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        }
+
         body {
-            font-family: 'Inter', sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem 1rem;
         }
-        ::-webkit-scrollbar {
-            width: 6px;
-            height: 6px;
+
+        .container {
+            width: 100%;
+            max-width: 850px;
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 2rem;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.4);
         }
-        ::-webkit-scrollbar-track {
-            background: #0b0f19;
+
+        h1 {
+            font-size: 1.35rem;
+            margin-bottom: 1.5rem;
+            text-align: center;
+            font-weight: 700;
+            background: linear-gradient(to right, #60a5fa, #a855f7);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
-        ::-webkit-scrollbar-thumb {
-            background: #1f293d;
-            border-radius: 3px;
+
+        .control-group {
+            margin-bottom: 1.25rem;
         }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #374151;
+
+        label {
+            display: block;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        input[type="file"], select {
+            width: 100%;
+            padding: 0.75rem;
+            background: #0d1117;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--text);
+            font-size: 0.9rem;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        input[type="file"]:hover, select:hover {
+            border-color: var(--primary);
+        }
+
+        .range-container {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        input[type="range"] {
+            flex: 1;
+            accent-color: var(--primary);
+        }
+
+        .preview-container {
+            position: relative;
+            width: 100%;
+            max-height: 400px;
+            background: #000;
+            border-radius: 8px;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 1.5rem 0;
+            border: 1px solid var(--border);
+        }
+
+        canvas {
+            max-width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 0.875rem;
+            background: linear-gradient(135deg, #3b82f6, #2563eb);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+        }
+
+        .btn:hover {
+            background: linear-gradient(135deg, #2563eb, #1d4ed8);
+            box-shadow: 0 6px 16px rgba(59, 130, 246, 0.4);
+            transform: translateY(-1px);
         }
     </style>
 </head>
-<body class="bg-[#090d16] text-slate-100 min-h-screen flex flex-col antialiased selection:bg-indigo-500 selection:text-white">
+<body>
 
-    <!-- Navigation Bar -->
-    <header class="bg-[#0f172a]/85 backdrop-blur-md border-b border-[#1e293b] sticky top-0 z-40">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-            <div class="flex items-center space-x-3">
-                <div class="w-10 h-10 bg-gradient-to-tr from-indigo-600 to-violet-500 rounded-xl flex items-center justify-center text-white shadow-lg shadow-indigo-500/30">
-                    <i class="fa-solid fa-wand-magic-sparkles text-sm"></i>
-                </div>
-                <div>
-                    <h1 class="text-base font-bold bg-gradient-to-r from-white via-indigo-200 to-indigo-400 bg-clip-text text-transparent">
-                        ThumbBlur Pro Studio
-                    </h1>
-                    <p class="text-[10px] text-slate-400 font-medium">YouTube Thumbnail Studio</p>
-                </div>
-            </div>
-            <div class="flex items-center space-x-3">
-                <span class="hidden sm:inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
-                    <span class="w-1.5 h-1.5 mr-1.5 rounded-full bg-emerald-400 animate-pulse"></span> Ready to export
-                </span>
-                <div class="w-9 h-9 rounded-full bg-slate-800 flex items-center justify-center text-slate-300 font-semibold border border-slate-700 shadow-inner">
-                    <i class="fa-solid fa-user text-xs"></i>
-                </div>
+    <div class="container">
+        <h1>Pro Play Button Studio v2.0</h1>
+
+        <!-- Unggah Gambar -->
+        <div class="control-group">
+            <label for="uploadImage">Pilih Gambar Latar:</label>
+            <input type="file" id="uploadImage" accept="image/*">
+        </div>
+
+        <!-- Pilihan Gaya Tombol Play Pro (15 Variasi) -->
+        <div class="control-group">
+            <label for="styleSelect">Pilih Gaya Tombol Play (Pro Styles):</label>
+            <select id="styleSelect">
+                <option value="1">1. YouTube Classic (Red Rounded Badge + White Play)</option>
+                <option value="2">2. Netflix Style (Dark Red Circle + Clean Play)</option>
+                <option value="3">3. Modern Glassmorphism (Frosted Glass + White Play)</option>
+                <option value="4">4. Cyberpunk Neon Cyan (Glow Effect + Sharp Play)</option>
+                <option value="5">5. Neon Crimson Red (Aggressive Glow Play)</option>
+                <option value="6">6. Minimalist Solid White (Clean Solid Circle)</option>
+                <option value="7">7. Dark Luxury Gold (Premium Metallic Look)</option>
+                <option value="8">8. Emerald Green Pro (High Trust Trust Badge)</option>
+                <option value="9">9. Ultra Thin Border Ring (Transparent Center)</option>
+                <option value="10">10. Solid Black Minimal (Stealth Dark Theme)</option>
+                <option value="11">11. Vibrant Gradient Sunset (Orange-Pink Pro)</option>
+                <option value="12">12. Electric Blue Matrix (Tech Vibe)</option>
+                <option value="13">13. Soft Pastel Blur (Modern Aesthetic)</option>
+                <option value="14">14. Double Ring Tech (Futuristic HUD Style)</option>
+                <option value="15">15. Drop Shadow Pop (High CTR Thumbnail Style)</option>
+            </select>
+        </div>
+
+        <!-- Ukuran Tombol Play -->
+        <div class="control-group">
+            <label for="sizeRange">Ukuran Tombol Play:</label>
+            <div class="range-container">
+                <input type="range" id="sizeRange" min="30" max="180" value="80">
+                <span id="sizeVal">80px</span>
             </div>
         </div>
-    </header>
 
-    <!-- Main Content Area -->
-    <main class="flex-1 max-w-7xl w-full mx-auto p-4 sm:p-6 lg:p-8 flex flex-col lg:flex-row gap-6">
-        
-        <!-- Left Section: Interactive Canvas & Live Preview -->
-        <section class="flex-1 flex flex-col bg-[#111827] rounded-2xl border border-[#1f293d] shadow-2xl p-4 sm:p-6 justify-between">
-            <div class="flex items-center justify-between pb-4 border-b border-[#1f293d] mb-4">
-                <div class="flex items-center space-x-2">
-                    <div class="w-2.5 h-2.5 rounded-full bg-indigo-500"></div>
-                    <h2 class="font-semibold text-slate-200 text-sm sm:text-base">Live Preview Canvas</h2>
-                </div>
-                <div class="flex items-center space-x-2 text-xs text-slate-400 bg-slate-900 px-3 py-1.5 rounded-lg border border-slate-800">
-                    <i class="fa-solid fa-expand text-indigo-400"></i>
-                    <span id="dimensionLabel">1280 x 720 px</span>
-                </div>
-            </div>
-
-            <!-- Canvas & Image Container -->
-            <div id="canvasContainer" class="relative w-full flex-1 min-h-[340px] sm:min-h-[460px] bg-slate-950 rounded-xl overflow-hidden flex items-center justify-center border border-slate-800/80 shadow-inner group">
-                <!-- Hidden HTML5 Canvas for Export -->
-                <canvas id="imageCanvas" class="hidden"></canvas>
-                
-                <!-- Live Interactive Preview Wrapper -->
-                <div id="previewWrapper" class="relative max-w-full max-h-full flex items-center justify-center overflow-hidden">
-                    <img id="sourceImagePreview" src="" alt="Thumbnail preview" class="max-h-[520px] w-auto object-contain transition-all duration-75 block" style="filter: blur(15px);" crossorigin="anonymous" />
-                    <!-- Dark Tint Overlay inside preview -->
-                    <div id="tintOverlay" class="absolute inset-0 bg-black pointer-events-none transition-opacity" style="opacity: 0.15;"></div>
-                    
-                    <!-- Play Button Overlay Element (Hidden by default) -->
-                    <div id="playButtonOverlay" class="absolute hidden items-center justify-center transition-all duration-150 cursor-move select-none z-20" style="top: 50%; left: 50%; transform: translate(-50%, -50%);">
-                        <div id="playButtonInner" class="flex items-center justify-center shadow-2xl transition-all">
-                            <i class="fa-solid fa-play"></i>
-                        </div>
-                    </div>
-
-                    <!-- Draggable Title & Description Overlay (Hidden by default) -->
-                    <div id="textOverlayBox" class="absolute hidden cursor-move select-none z-25 p-2 max-w-xs text-center" style="top: 20%; left: 50%; transform: translateX(-50%);">
-                        <h4 id="previewTitleText" class="font-extrabold text-lg drop-shadow-md mb-1 text-white">Judul Video Anda</h4>
-                        <p id="previewDescText" class="text-xs font-medium drop-shadow text-slate-200">Deskripsi singkat video muncul di sini</p>
-                    </div>
-
-                    <!-- Dynamic Multi-Social Stickers Layer -->
-                    <div id="socialStickersContainer" class="absolute inset-0 pointer-events-none z-30">
-                        <!-- Dynamic sticker elements injected via JS here -->
-                    </div>
-
-                    <!-- Sensitive Content Warning -->
-                    <div id="sensitiveOverlay" class="absolute hidden z-35 select-none cursor-move p-4 flex flex-col items-center text-center max-w-md" style="top: 50%; left: 50%; transform: translate(-50%, -50%);">
-                        <div class="text-white text-3xl mb-2 drop-shadow-lg">
-                            <i class="fa-solid fa-eye-slash"></i>
-                        </div>
-                        <h3 class="text-white font-extrabold text-xl mb-1.5 drop-shadow-md">Sensitive Content</h3>
-                        <p class="text-slate-100 text-xs leading-relaxed font-normal drop-shadow">This content may contain material that some viewers could find sensitive, disturbing, or inappropriate.</p>
-                    </div>
-                </div>
-
-                <!-- Empty State Dropzone -->
-                <div id="emptyState" class="absolute inset-0 bg-[#090d16]/90 backdrop-blur-md flex flex-col items-center justify-center text-center p-6 transition-opacity z-50">
-                    <div class="w-20 h-20 bg-indigo-600/10 rounded-2xl flex items-center justify-center text-indigo-400 text-3xl mb-4 border border-indigo-500/20 shadow-xl shadow-indigo-500/10 animate-pulse">
-                        <i class="fa-solid fa-cloud-arrow-up"></i>
-                    </div>
-                    <h3 class="text-white font-bold text-lg mb-1">Upload Gambar Thumbnail</h3>
-                    <p class="text-slate-400 text-sm max-w-sm mb-6">Seret dan letakkan foto di sini, atau klik tombol di bawah untuk memilih file dari komputer Anda.</p>
-                    <label class="px-6 py-3 bg-indigo-600 hover:bg-indigo-500 text-white text-sm font-semibold rounded-xl cursor-pointer shadow-lg shadow-indigo-600/40 transition transform active:scale-95 flex items-center space-x-2">
-                        <i class="fa-solid fa-folder-open"></i>
-                        <span>Pilih File Foto</span>
-                        <input type="file" id="fileInputEmpty" accept="image/*" class="hidden">
-                    </label>
-                </div>
-            </div>
-
-            <!-- Footer info inside canvas card -->
-            <div class="mt-4 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-400 gap-2">
-                <span class="flex items-center"><i class="fa-solid fa-circle-info mr-1.5 text-indigo-400"></i> Tips: Blur intensity kini dimaksimalkan hingga 200px.</span>
-                <button onclick="resetAllSettings()" class="hover:text-red-400 transition font-medium flex items-center space-x-1">
-                    <i class="fa-solid fa-rotate-right"></i><span>Reset Pengaturan</span>
-                </button>
-            </div>
-        </section>
-
-        <!-- Right Sidebar: Professional SaaS Toolbox -->
-        <aside class="w-full lg:w-[380px] bg-[#111827] rounded-2xl border border-[#1f293d] shadow-2xl p-5 sm:p-6 flex flex-col space-y-5 max-h-[85vh] overflow-y-auto">
-            
-            <div class="border-b border-[#1f293d] pb-3 flex items-center justify-between">
-                <h3 class="font-bold text-slate-100 text-base flex items-center">
-                    <i class="fa-solid fa-sliders text-indigo-500 mr-2"></i> Toolbox Studio
-                </h3>
-                <span class="text-xs font-semibold px-2 py-0.5 rounded bg-indigo-500/10 text-indigo-400 border border-indigo-500/20">Pro Mode</span>
-            </div>
-
-            <!-- 1. Select Image Section -->
-            <div class="space-y-2">
-                <label class="text-[11px] font-bold text-slate-400 uppercase tracking-wider">1. Select Source Image</label>
-                <label class="w-full border-2 border-dashed border-slate-700 hover:border-indigo-500 bg-slate-900/50 hover:bg-indigo-500/5 rounded-xl p-3 flex items-center justify-center space-x-2.5 cursor-pointer transition group">
-                    <i class="fa-solid fa-upload text-slate-400 group-hover:text-indigo-400 transition"></i>
-                    <span class="text-xs font-medium text-slate-300 group-hover:text-indigo-300">Ganti Foto Thumbnail</span>
-                    <input type="file" id="fileInput" accept="image/*" class="hidden">
-                </label>
-            </div>
-
-            <!-- 2. Blur Intensity & Tint Controls (Max 200) -->
-            <div class="space-y-3 bg-slate-900/60 p-3.5 rounded-xl border border-slate-800">
-                <div class="flex justify-between items-center">
-                    <label class="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Blur Intensity (Max 200px)</label>
-                    <span id="blurValueLabel" class="text-xs font-bold text-indigo-400 bg-indigo-500/10 px-2 py-0.5 rounded">15 px</span>
-                </div>
-                <input type="range" id="blurRange" min="0" max="200" value="15" class="w-full accent-indigo-500 cursor-pointer h-2 bg-slate-800 rounded-lg">
-                
-                <div class="pt-2 border-t border-slate-800/80">
-                    <div class="flex justify-between items-center mb-1">
-                        <label class="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Dark Tint Overlay</label>
-                        <span id="tintValueLabel" class="text-xs font-bold text-slate-300">15%</span>
-                    </div>
-                    <input type="range" id="tintRange" min="0" max="80" value="15" class="w-full accent-indigo-500 cursor-pointer h-2 bg-slate-800 rounded-lg">
-                </div>
-            </div>
-
-            <!-- 3. Sensitive Content Toggle -->
-            <div class="space-y-3 bg-slate-900/60 p-3.5 rounded-xl border border-slate-800">
-                <div class="flex items-center justify-between">
-                    <label class="text-[11px] font-bold text-slate-400 uppercase tracking-wider flex items-center">
-                        <i class="fa-solid fa-eye-slash text-indigo-400 mr-1.5"></i> Sensitive Content Warning
-                    </label>
-                    <input type="checkbox" id="sensitiveToggle" class="w-4 h-4 accent-indigo-600 rounded cursor-pointer">
-                </div>
-                <p class="text-[10px] text-slate-400">Menimpa ikon dan teks peringatan langsung di atas foto tanpa kotak latar belakang hitam.</p>
-            </div>
-
-            <!-- 4. Play Button Toggle & Styles -->
-            <div class="space-y-3 bg-slate-900/60 p-3.5 rounded-xl border border-slate-800">
-                <div class="flex items-center justify-between">
-                    <label class="text-[11px] font-bold text-slate-400 uppercase tracking-wider flex items-center">
-                        <i class="fa-solid fa-play text-indigo-400 mr-1.5"></i> Tombol Play Button
-                    </label>
-                    <input type="checkbox" id="playToggle" class="w-4 h-4 accent-indigo-600 rounded cursor-pointer">
-                </div>
-                
-                <div id="playButtonOptions" class="space-y-2 pt-2 border-t border-slate-800 hidden">
-                    <div class="grid grid-cols-3 gap-2 max-h-36 overflow-y-auto pr-1">
-                        <label class="style-card flex flex-col items-center justify-center p-2 rounded-xl border border-indigo-500 bg-indigo-500/10 cursor-pointer transition text-center group">
-                            <input type="radio" name="playStyle" value="modernRed" checked class="hidden">
-                            <div class="w-7 h-7 rounded-lg bg-red-600 text-white flex items-center justify-center mb-1 shadow-md shadow-red-600/40">
-                                <i class="fa-solid fa-play text-[10px] translate-x-0.5"></i>
-                            </div>
-                            <span class="text-[9px] font-semibold text-slate-200">Modern Red</span>
-                        </label>
-                        <label class="style-card flex flex-col items-center justify-center p-2 rounded-xl border border-slate-800 hover:border-slate-600 bg-slate-900/60 cursor-pointer transition text-center group">
-                            <input type="radio" name="playStyle" value="classicWhite" class="hidden">
-                            <div class="w-7 h-7 rounded-full bg-white text-slate-950 flex items-center justify-center mb-1 shadow-md">
-                                <i class="fa-solid fa-play text-[10px] text-red-600 translate-x-0.5"></i>
-                            </div>
-                            <span class="text-[9px] font-medium text-slate-400 group-hover:text-slate-200">Classic White</span>
-                        </label>
-                        <label class="style-card flex flex-col items-center justify-center p-2 rounded-xl border border-slate-800 hover:border-slate-600 bg-slate-900/60 cursor-pointer transition text-center group">
-                            <input type="radio" name="playStyle" value="neonCyan" class="hidden">
-                            <div class="w-7 h-7 rounded-full bg-cyan-500 text-slate-950 flex items-center justify-center mb-1 shadow-md shadow-cyan-500/50">
-                                <i class="fa-solid fa-play text-[10px] translate-x-0.5"></i>
-                            </div>
-                            <span class="text-[9px] font-medium text-slate-400 group-hover:text-slate-200">Neon Cyan</span>
-                        </label>
-                    </div>
-                    <div class="space-y-1">
-                        <div class="flex justify-between items-center text-[10px]">
-                            <span class="text-slate-400 font-medium">Button Size</span>
-                            <span id="sizeValueLabel" class="font-bold text-slate-200">80px</span>
-                        </div>
-                        <input type="range" id="sizeRange" min="40" max="150" value="80" class="w-full accent-indigo-500 cursor-pointer h-1.5 bg-slate-800 rounded-lg">
-                    </div>
-                </div>
-            </div>
-
-            <!-- 5. Title & Description Manual Inputs with Color Customization -->
-            <div class="space-y-3 bg-slate-900/60 p-3.5 rounded-xl border border-slate-800">
-                <div class="flex items-center justify-between">
-                    <label class="text-[11px] font-bold text-slate-400 uppercase tracking-wider flex items-center">
-                        <i class="fa-solid fa-heading text-indigo-400 mr-1.5"></i> Title & Deskripsi Overlay
-                    </label>
-                    <input type="checkbox" id="textToggle" class="w-4 h-4 accent-indigo-600 rounded cursor-pointer">
-                </div>
-
-                <div id="textOptionsContainer" class="space-y-2 pt-2 border-t border-slate-800 hidden">
-                    <div>
-                        <label class="text-[10px] text-slate-400 font-medium">Judul Video</label>
-                        <input type="text" id="inputTitleText" value="Judul Video Anda" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-1.5 text-xs text-white focus:outline-none focus:border-indigo-500">
-                    </div>
-                    <div>
-                        <label class="text-[10px] text-slate-400 font-medium">Deskripsi Singkat</label>
-                        <input type="text" id="inputDescText" value="Deskripsi singkat video muncul di sini" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-1.5 text-xs text-white focus:outline-none focus:border-indigo-500">
-                    </div>
-                    <div>
-                        <label class="text-[10px] text-slate-400 font-medium">Warna Font Teks</label>
-                        <div class="flex items-center space-x-2 mt-1">
-                            <input type="color" id="inputFontColor" value="#ffffff" class="w-8 h-8 rounded border border-slate-700 bg-transparent cursor-pointer">
-                            <span class="text-[10px] text-slate-300">Pilih warna font</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 6. Multi-Social Media Stickers Generator -->
-            <div class="space-y-3 bg-slate-900/60 p-3.5 rounded-xl border border-slate-800">
-                <div class="flex items-center justify-between">
-                    <label class="text-[11px] font-bold text-slate-400 uppercase tracking-wider flex items-center">
-                        <i class="fa-solid fa-share-nodes text-indigo-400 mr-1.5"></i> Stiker Sosial Media & Ikon
-                    </label>
-                </div>
-                <div class="space-y-3 pt-2 border-t border-slate-800">
-                    <div class="flex items-center space-x-2">
-                        <select id="selectAddPlatform" class="flex-1 bg-slate-950 border border-slate-800 rounded-lg px-3 py-1.5 text-xs text-white focus:outline-none focus:border-indigo-500">
-                            <option value="youtube">YouTube</option>
-                            <option value="whatsapp">WhatsApp</option>
-                            <option value="tiktok">TikTok</option>
-                            <option value="instagram">Instagram</option>
-                            <option value="facebook">Facebook</option>
-                            <option value="twitter">Twitter / X</option>
-                            <option value="telegram">Telegram</option>
-                            <option value="tinder">Tinder</option>
-                            <option value="onlyfans">OnlyFans</option>
-                        </select>
-                        <button id="addSocialStickerBtn" class="px-3 py-1.5 bg-indigo-600 hover:bg-indigo-500 text-white rounded-lg text-xs font-semibold shadow transition flex items-center space-x-1">
-                            <i class="fa-solid fa-plus"></i><span>Tambah</span>
-                        </button>
-                    </div>
-
-                    <div class="space-y-1 bg-slate-950 p-2.5 rounded-lg border border-slate-800">
-                        <div class="flex justify-between items-center text-[10px]">
-                            <span class="text-slate-400 font-medium">Ukuran Ikon (Manual Slider)</span>
-                            <span id="stickerSizeValueLabel" class="font-bold text-indigo-400">32px</span>
-                        </div>
-                        <input type="range" id="globalStickerSizeRange" min="16" max="96" value="32" class="w-full accent-indigo-500 cursor-pointer h-1.5 bg-slate-800 rounded-lg">
-                    </div>
-                </div>
-            </div>
-
-            <!-- 7. Download Action -->
-            <div class="pt-2">
-                <button id="downloadBtn" class="w-full py-3.5 px-4 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-bold rounded-xl shadow-lg shadow-emerald-600/30 flex items-center justify-center space-x-2 transition transform active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed text-sm">
-                    <i class="fa-solid fa-download"></i>
-                    <span>Download Thumbnail HD</span>
-                </button>
-            </div>
-
-        </aside>
-
-    </main>
-
-    <!-- Toast Notification Message Box -->
-    <div id="toastNotification" class="fixed bottom-6 right-6 z-50 transform translate-y-24 opacity-0 transition-all duration-300 bg-slate-900 text-white px-5 py-3.5 rounded-xl shadow-2xl flex items-center space-x-3 border border-slate-700">
-        <i id="toastIcon" class="fa-solid fa-circle-check text-emerald-400 text-lg"></i>
-        <div>
-            <h4 id="toastTitle" class="font-semibold text-sm">Berhasil</h4>
-            <p id="toastMessage" class="text-xs text-slate-300">Thumbnail siap diunduh.</p>
+        <!-- Area Preview -->
+        <div class="preview-container">
+            <canvas id="imageCanvas"></canvas>
         </div>
+
+        <!-- Tombol Download -->
+        <button id="downloadBtn" class="btn">Unduh Hasil Thumbnail (PNG)</button>
     </div>
 
-    <!-- JavaScript Application Logic -->
     <script>
-        const state = {
-            imageLoaded: false,
-            imgElement: new Image(),
-            fileName: 'youtube-thumbnail-custom.jpg',
-            blurAmount: 15,
-            tintAmount: 15,
-            sensitiveActive: false,
-            playActive: false,
-            playStyle: 'modernRed',
-            buttonSize: 80,
-            globalStickerSize: 32,
-            textActive: false,
-            titleText: 'Judul Video Anda',
-            descText: 'Deskripsi singkat video muncul di sini',
-            fontColor: '#ffffff',
-            socialStickers: []
-        };
-
-        const fileInput = document.getElementById('fileInput');
-        const fileInputEmpty = document.getElementById('fileInputEmpty');
-        const sourceImagePreview = document.getElementById('sourceImagePreview');
-        const tintOverlay = document.getElementById('tintOverlay');
-        const sensitiveOverlay = document.getElementById('sensitiveOverlay');
-        const playButtonOverlay = document.getElementById('playButtonOverlay');
-        const playButtonInner = document.getElementById('playButtonInner');
-        const textOverlayBox = document.getElementById('textOverlayBox');
-        const previewTitleText = document.getElementById('previewTitleText');
-        const previewDescText = document.getElementById('previewDescText');
-        const socialStickersContainer = document.getElementById('socialStickersContainer');
-        
-        const emptyState = document.getElementById('emptyState');
-        const blurRange = document.getElementById('blurRange');
-        const blurValueLabel = document.getElementById('blurValueLabel');
-        const tintRange = document.getElementById('tintRange');
-        const tintValueLabel = document.getElementById('tintValueLabel');
+        const uploadImage = document.getElementById('uploadImage');
+        const styleSelect = document.getElementById('styleSelect');
         const sizeRange = document.getElementById('sizeRange');
-        const sizeValueLabel = document.getElementById('sizeValueLabel');
-        
-        const globalStickerSizeRange = document.getElementById('globalStickerSizeRange');
-        const stickerSizeValueLabel = document.getElementById('stickerSizeValueLabel');
-
-        const dimensionLabel = document.getElementById('dimensionLabel');
+        const sizeVal = document.getElementById('sizeVal');
+        const canvas = document.getElementById('imageCanvas');
+        const ctx = canvas.getContext('2d');
         const downloadBtn = document.getElementById('downloadBtn');
-        const imageCanvas = document.getElementById('imageCanvas');
 
-        const sensitiveToggle = document.getElementById('sensitiveToggle');
-        const playToggle = document.getElementById('playToggle');
-        const playButtonOptions = document.getElementById('playButtonOptions');
-        const textToggle = document.getElementById('textToggle');
-        const textOptionsContainer = document.getElementById('textOptionsContainer');
-        const inputTitleText = document.getElementById('inputTitleText');
-        const inputDescText = document.getElementById('inputDescText');
-        const inputFontColor = document.getElementById('inputFontColor');
-        
-        const selectAddPlatform = document.getElementById('selectAddPlatform');
-        const addSocialStickerBtn = document.getElementById('addSocialStickerBtn');
+        let currentImage = new Image();
+        let imageLoaded = false;
 
-        window.addEventListener('DOMContentLoaded', () => {
-            loadDefaultImage('https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=1280&q=80');
-            setupDraggable(playButtonOverlay);
-            setupDraggable(textOverlayBox);
-            setupDraggable(sensitiveOverlay);
-        });
-
-        function loadDefaultImage(url) {
-            state.imgElement.crossOrigin = "anonymous";
-            state.imgElement.onload = function() {
-                state.imageLoaded = true;
-                sourceImagePreview.src = state.imgElement.src;
-                emptyState.classList.add('opacity-0', 'pointer-events-none');
-                updateDimensionsLabel();
-                updatePlayButtonStyle();
-            };
-            state.imgElement.onerror = function() {
-                sourceImagePreview.src = 'https://placehold.co/1280x720/0f172a/ffffff?text=Thumbnail+Preview';
-                state.imageLoaded = true;
-                emptyState.classList.add('opacity-0', 'pointer-events-none');
-                updateDimensionsLabel();
-                updatePlayButtonStyle();
-            };
-            state.imgElement.src = url;
+        function loadDefaultImage() {
+            currentImage.src = 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=800&auto=format&fit=crop';
+            currentImage.crossOrigin = "anonymous";
+            currentImage.onload = function() {
+                imageLoaded = true;
+                drawCanvas();
+            }
         }
 
-        function handleImageUpload(e) {
+        loadDefaultImage();
+
+        uploadImage.addEventListener('change', function(e) {
             const file = e.target.files[0];
-            if (!file) return;
-
-            state.fileName = file.name.replace(/\.[^/.]+$/, "") + "-custom.jpg";
-            const reader = new FileReader();
-            reader.onload = function(event) {
-                state.imgElement.onload = function() {
-                    state.imageLoaded = true;
-                    sourceImagePreview.src = state.imgElement.src;
-                    emptyState.classList.add('opacity-0', 'pointer-events-none');
-                    updateDimensionsLabel();
-                    updatePlayButtonStyle();
-                    showNotification('Foto berhasil dimuat!', 'Sukses');
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    currentImage.src = event.target.result;
+                    currentImage.onload = function() {
+                        imageLoaded = true;
+                        drawCanvas();
+                    }
                 }
-                state.imgElement.src = event.target.result;
-            }
-            reader.readAsDataURL(file);
-        }
-
-        fileInput.addEventListener('change', handleImageUpload);
-        fileInputEmpty.addEventListener('change', handleImageUpload);
-
-        blurRange.addEventListener('input', (e) => {
-            state.blurAmount = e.target.value;
-            blurValueLabel.textContent = state.blurAmount + ' px';
-            sourceImagePreview.style.filter = `blur(${state.blurAmount}px)`;
-        });
-
-        tintRange.addEventListener('input', (e) => {
-            state.tintAmount = e.target.value;
-            tintValueLabel.textContent = state.tintAmount + '%';
-            tintOverlay.style.opacity = state.tintAmount / 100;
-        });
-
-        sensitiveToggle.addEventListener('change', (e) => {
-            state.sensitiveActive = e.target.checked;
-            if (state.sensitiveActive) {
-                sensitiveOverlay.classList.remove('hidden');
-            } else {
-                sensitiveOverlay.classList.add('hidden');
+                reader.readAsDataURL(file);
             }
         });
 
-        playToggle.addEventListener('change', (e) => {
-            state.playActive = e.target.checked;
-            if (state.playActive) {
-                playButtonOptions.classList.remove('hidden');
-                playButtonOverlay.classList.remove('hidden');
-                playButtonOverlay.classList.add('flex');
-            } else {
-                playButtonOptions.classList.add('hidden');
-                playButtonOverlay.classList.add('hidden');
-                playButtonOverlay.classList.remove('flex');
-            }
+        styleSelect.addEventListener('change', () => { if (imageLoaded) drawCanvas(); });
+        sizeRange.addEventListener('input', function() {
+            sizeVal.textContent = this.value + 'px';
+            if (imageLoaded) drawCanvas();
         });
 
-        textToggle.addEventListener('change', (e) => {
-            state.textActive = e.target.checked;
-            if (state.textActive) {
-                textOptionsContainer.classList.remove('hidden');
-                textOverlayBox.classList.remove('hidden');
-            } else {
-                textOptionsContainer.classList.add('hidden');
-                textOverlayBox.classList.add('hidden');
-            }
-        });
+        function drawCanvas() {
+            canvas.width = currentImage.naturalWidth;
+            canvas.height = currentImage.naturalHeight;
 
-        inputTitleText.addEventListener('input', (e) => {
-            state.titleText = e.target.value;
-            previewTitleText.textContent = state.titleText;
-        });
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.drawImage(currentImage, 0, 0);
 
-        inputDescText.addEventListener('input', (e) => {
-            state.descText = e.target.value;
-            previewDescText.textContent = state.descText;
-        });
-
-        inputFontColor.addEventListener('input', (e) => {
-            state.fontColor = e.target.value;
-            previewTitleText.style.color = state.fontColor;
-            previewDescText.style.color = state.fontColor;
-        });
-
-        globalStickerSizeRange.addEventListener('input', (e) => {
-            state.globalStickerSize = parseInt(e.target.value);
-            stickerSizeValueLabel.textContent = state.globalStickerSize + 'px';
-            renderSocialStickers();
-        });
-
-        addSocialStickerBtn.addEventListener('click', () => {
-            const platform = selectAddPlatform.value;
-            const newSticker = {
-                id: Date.now(),
-                platform: platform,
-                x: 50 + (state.socialStickers.length * 20),
-                y: 50 + (state.socialStickers.length * 20)
-            };
-            state.socialStickers.push(newSticker);
-            renderSocialStickers();
-            showNotification('Stiker sosial media ditambahkan!', 'Sukses');
-        });
-
-        function renderSocialStickers() {
-            socialStickersContainer.innerHTML = '';
-            state.socialStickers.forEach((sticker) => {
-                const div = document.createElement('div');
-                div.className = 'absolute cursor-move select-none pointer-events-auto p-2.5 bg-slate-900/90 backdrop-blur-md rounded-2xl border border-slate-700 shadow-xl flex items-center justify-center group';
-                div.style.left = sticker.x + 'px';
-                div.style.top = sticker.y + 'px';
-                div.dataset.id = sticker.id;
-
-                let iconClass = getSocialIconClass(sticker.platform);
-                let iconColor = getSocialColor(sticker.platform);
-                let currentSize = state.globalStickerSize;
-
-                div.innerHTML = `
-                    <i class="${iconClass}" style="font-size: ${currentSize}px; color: ${iconColor}; display: inline-block;"></i>
-                    <button onclick="removeSocialSticker(${sticker.id})" class="absolute -top-2 -right-2 w-5 h-5 bg-red-600 text-white rounded-full text-[10px] flex items-center justify-center shadow hover:bg-red-500 transition opacity-0 group-hover:opacity-100 z-10">
-                        <i class="fa-solid fa-xmark"></i>
-                    </button>
-                `;
-
-                setupDraggableCustom(div, sticker);
-                socialStickersContainer.appendChild(div);
-            });
-        }
-
-        window.removeSocialSticker = function(id) {
-            state.socialStickers = state.socialStickers.filter(s => s.id !== id);
-            renderSocialStickers();
-        }
-
-        function getSocialIconClass(platform) {
-            switch(platform) {
-                case 'youtube': return 'fa-brands fa-youtube';
-                case 'whatsapp': return 'fa-brands fa-whatsapp';
-                case 'tiktok': return 'fa-brands fa-tiktok';
-                case 'instagram': return 'fa-brands fa-instagram';
-                case 'facebook': return 'fa-brands fa-facebook';
-                case 'twitter': return 'fa-brands fa-twitter';
-                case 'telegram': return 'fa-brands fa-telegram';
-                case 'tinder': return 'fa-brands fa-tinder';
-                case 'onlyfans': return 'fa-brands fa-onlyfans';
-                default: return 'fa-brands fa-youtube';
-            }
-        }
-
-        function getSocialColor(platform) {
-            switch(platform) {
-                case 'youtube': return '#ef4444';
-                case 'whatsapp': return '#34d399';
-                case 'tiktok': return '#ffffff';
-                case 'instagram': return '#ec4899';
-                case 'facebook': return '#3b82f6';
-                case 'twitter': return '#38bdf8';
-                case 'telegram': return '#60a5fa';
-                case 'tinder': return '#FE3C72';
-                case 'onlyfans': return '#00AFF0';
-                default: return '#ffffff';
-            }
-        }
-
-        sizeRange.addEventListener('input', (e) => {
-            state.buttonSize = e.target.value;
-            sizeValueLabel.textContent = state.buttonSize + 'px';
-            updatePlayButtonStyle();
-        });
-
-        document.querySelectorAll('input[name="playStyle"]').forEach(radio => {
-            radio.addEventListener('change', (e) => {
-                state.playStyle = e.target.value;
-                document.querySelectorAll('.style-card').forEach(card => {
-                    card.classList.remove('border-indigo-500', 'bg-indigo-500/10');
-                    card.classList.add('border-slate-800', 'bg-slate-900/60');
-                });
-                e.target.closest('.style-card').classList.remove('border-slate-800', 'bg-slate-900/60');
-                e.target.closest('.style-card').classList.add('border-indigo-500', 'bg-indigo-500/10');
-                updatePlayButtonStyle();
-            });
-        });
-
-        function updatePlayButtonStyle() {
-            playButtonInner.style.width = state.buttonSize + 'px';
-            playButtonInner.style.height = state.buttonSize + 'px';
-            playButtonInner.className = "flex items-center justify-center shadow-2xl transition-all ";
-
-            let iconSize = Math.max(14, Math.round(state.buttonSize * 0.35));
-            playButtonInner.innerHTML = `<i class="fa-solid fa-play" style="font-size: ${iconSize}px;"></i>`;
-
-            switch(state.playStyle) {
-                case 'modernRed':
-                    playButtonInner.className += "rounded-2xl bg-red-600 text-white shadow-red-600/50";
-                    break;
-                case 'classicWhite':
-                    playButtonInner.className += "rounded-full bg-white text-slate-950 shadow-black/40";
-                    break;
-                case 'neonCyan':
-                    playButtonInner.className += "rounded-full bg-cyan-500 text-slate-950 shadow-cyan-500/60 font-bold";
-                    break;
-            }
-        }
-
-        function updateDimensionsLabel() {
-            if (state.imgElement.naturalWidth) {
-                dimensionLabel.textContent = `${state.imgElement.naturalWidth} x ${state.imgElement.naturalHeight} px`;
-            }
-        }
-
-        function setupDraggable(element) {
-            let isDragging = false;
-            let startX, startY, initialX, initialY;
-
-            element.addEventListener('mousedown', dragStart);
-            document.addEventListener('mousemove', drag);
-            document.addEventListener('mouseup', dragEnd);
-
-            element.addEventListener('touchstart', dragStart, {passive: true});
-            document.addEventListener('touchmove', drag, {passive: true});
-            document.addEventListener('touchend', dragEnd);
-
-            function dragStart(e) {
-                isDragging = true;
-                let clientX = e.clientX || e.touches[0].clientX;
-                let clientY = e.clientY || e.touches[0].clientY;
-                startX = clientX;
-                startY = clientY;
-                
-                const rect = element.getBoundingClientRect();
-                const parentRect = element.parentElement.getBoundingClientRect();
-                
-                initialX = rect.left - parentRect.left;
-                initialY = rect.top - parentRect.top;
-                
-                element.style.transform = 'none';
-                element.style.left = initialX + 'px';
-                element.style.top = initialY + 'px';
-            }
-
-            function drag(e) {
-                if (!isDragging) return;
-                let clientX = e.clientX || e.touches[0].clientX;
-                let clientY = e.clientY || e.touches[0].clientY;
-                
-                const dx = clientX - startX;
-                const dy = clientY - startY;
-                
-                element.style.left = (initialX + dx) + 'px';
-                element.style.top = (initialY + dy) + 'px';
-            }
-
-            function dragEnd() {
-                isDragging = false;
-            }
-        }
-
-        function setupDraggableCustom(element, stickerObj) {
-            let isDragging = false;
-            let startX, startY, initialX, initialY;
-
-            element.addEventListener('mousedown', dragStart);
-            document.addEventListener('mousemove', drag);
-            document.addEventListener('mouseup', dragEnd);
-
-            element.addEventListener('touchstart', dragStart, {passive: true});
-            document.addEventListener('touchmove', drag, {passive: true});
-            document.addEventListener('touchend', dragEnd);
-
-            function dragStart(e) {
-                if(e.target.closest('button')) return;
-                isDragging = true;
-                let clientX = e.clientX || e.touches[0].clientX;
-                let clientY = e.clientY || e.touches[0].clientY;
-                startX = clientX;
-                startY = clientY;
-                
-                const rect = element.getBoundingClientRect();
-                const parentRect = element.parentElement.getBoundingClientRect();
-                
-                initialX = rect.left - parentRect.left;
-                initialY = rect.top - parentRect.top;
-            }
-
-            function drag(e) {
-                if (!isDragging) return;
-                let clientX = e.clientX || e.touches[0].clientX;
-                let clientY = e.clientY || e.touches[0].clientY;
-                
-                const dx = clientX - startX;
-                const dy = clientY - startY;
-                
-                stickerObj.x = initialX + dx;
-                stickerObj.y = initialY + dy;
-                
-                element.style.left = stickerObj.x + 'px';
-                element.style.top = stickerObj.y + 'px';
-            }
-
-            function dragEnd() {
-                isDragging = false;
-            }
-        }
-
-        downloadBtn.addEventListener('click', () => {
-            if (!state.imageLoaded) {
-                showNotification('Harap unggah gambar terlebih dahulu!', 'Perhatian');
-                return;
-            }
-
-            const canvas = imageCanvas;
-            const ctx = canvas.getContext('2d');
-
-            const width = state.imgElement.naturalWidth || 1280;
-            const height = state.imgElement.naturalHeight || 720;
-            canvas.width = width;
-            canvas.height = height;
+            const scaleFactor = canvas.width / 800;
+            const baseSize = parseInt(sizeRange.value);
+            const playSize = baseSize * Math.max(scaleFactor, 0.4);
+            const centerX = canvas.width / 2;
+            const centerY = canvas.height / 2;
+            const style = styleSelect.value;
 
             ctx.save();
-            ctx.filter = `blur(${state.blurAmount}px)`;
-            ctx.drawImage(state.imgElement, 0, 0, width, height);
+
+            // Render berdasarkan 15 pilihan gaya pro
+            switch(style) {
+                case '1': // YouTube Classic
+                    drawCircle(centerX, centerY, playSize, '#ff0000', 'rgba(0,0,0,0.3)', 0, 0);
+                    drawPlayIcon(centerX, centerY + (playSize*0.05), playSize * 0.55, '#ffffff');
+                    break;
+                case '2': // Netflix Style
+                    drawCircle(centerX, centerY, playSize, '#b91c1c', 'rgba(0,0,0,0.5)', 0, 0);
+                    drawPlayIcon(centerX, centerY, playSize * 0.5, '#ffffff');
+                    break;
+                case '3': // Glassmorphism
+                    drawCircle(centerX, centerY, playSize, 'rgba(255, 255, 255, 0.25)', 'rgba(0,0,0,0.3)', 2 * scaleFactor, 'rgba(255,255,255,0.6)');
+                    drawPlayIcon(centerX, centerY, playSize * 0.5, '#ffffff');
+                    break;
+                case '4': // Cyberpunk Cyan Glow
+                    ctx.shadowColor = '#06b6d4';
+                    ctx.shadowBlur = 20 * scaleFactor;
+                    drawCircle(centerX, centerY, playSize, '#090d16', '#06b6d4', 3 * scaleFactor, '#06b6d4');
+                    ctx.shadowBlur = 0; // reset
+                    drawPlayIcon(centerX, centerY, playSize * 0.5, '#06b6d4');
+                    break;
+                case '5': // Neon Crimson Glow
+                    ctx.shadowColor = '#ef4444';
+                    ctx.shadowBlur = 25 * scaleFactor;
+                    drawCircle(centerX, centerY, playSize, '#110505', '#ef4444', 3 * scaleFactor, '#ef4444');
+                    ctx.shadowBlur = 0;
+                    drawPlayIcon(centerX, centerY, playSize * 0.5, '#ef4444');
+                    break;
+                case '6': // Minimalist Solid White
+                    drawCircle(centerX, centerY, playSize, '#ffffff', 'rgba(0,0,0,0.4)', 0, 0);
+                    drawPlayIcon(centerX, centerY, playSize * 0.5, '#0f172a');
+                    break;
+                case '7': // Dark Luxury Gold
+                    drawCircle(centerX, centerY, playSize, '#1c1917', '#d97706', 3 * scaleFactor, '#d97706');
+                    drawPlayIcon(centerX, centerY, playSize * 0.5, '#fbbf24');
+                    break;
+                case '8': // Emerald Green Pro
+                    drawCircle(centerX, centerY, playSize, '#065f46', 'rgba(0,0,0,0.4)', 2 * scaleFactor, '#34d399');
+                    drawPlayIcon(centerX, centerY, playSize * 0.5, '#ffffff');
+                    break;
+                case '9': // Ultra Thin Border Ring
+                    drawCircle(centerX, centerY, playSize, 'rgba(0,0,0,0.4)', 'rgba(255,255,255,0.8)', 2 * scaleFactor, 'rgba(255,255,255,0.8)');
+                    drawPlayIcon(centerX, centerY, playSize * 0.5, '#ffffff');
+                    break;
+                case '10': // Solid Black Minimal
+                    drawCircle(centerX, centerY, playSize, '#090d16', 'rgba(0,0,0,0.6)', 2 * scaleFactor, '#334155');
+                    drawPlayIcon(centerX, centerY, playSize * 0.5, '#f8fafc');
+                    break;
+                case '11': // Gradient Sunset
+                    const grad1 = ctx.createLinearGradient(centerX - playSize, centerY - playSize, centerX + playSize, centerY + playSize);
+                    grad1.addColorStop(0, '#f97316');
+                    grad1.addColorStop(1, '#db2777');
+                    drawCustomFillCircle(centerX, centerY, playSize, grad1, 'rgba(0,0,0,0.4)');
+                    drawPlayIcon(centerX, centerY, playSize * 0.5, '#ffffff');
+                    break;
+                case '12': // Electric Blue Matrix
+                    const grad2 = ctx.createLinearGradient(centerX - playSize, centerY - playSize, centerX + playSize, centerY + playSize);
+                    grad2.addColorStop(0, '#3b82f6');
+                    grad2.addColorStop(1, '#1d4ed8');
+                    drawCustomFillCircle(centerX, centerY, playSize, grad2, 'rgba(0,0,0,0.5)');
+                    drawPlayIcon(centerX, centerY, playSize * 0.5, '#ffffff');
+                    break;
+                case '13': // Soft Pastel Blur
+                    drawCircle(centerX, centerY, playSize, 'rgba(255,255,255,0.85)', 'rgba(0,0,0,0.2)', 0, 0);
+                    drawPlayIcon(centerX, centerY, playSize * 0.5, '#4f46e5');
+                    break;
+                case '14': // Double Ring Tech
+                    drawCircle(centerX, centerY, playSize, '#0f172a', 'rgba(0,0,0,0.5)', 2 * scaleFactor, '#3b82f6');
+                    // Ring kedua di dalam
+                    ctx.beginPath();
+                    ctx.arc(centerX, centerY, playSize * 0.8, 0, 2 * Math.PI);
+                    ctx.strokeStyle = 'rgba(59, 130, 246, 0.4)';
+                    ctx.lineWidth = 1 * scaleFactor;
+                    ctx.stroke();
+                    drawPlayIcon(centerX, centerY, playSize * 0.45, '#3b82f6');
+                    break;
+                case '15': // Drop Shadow Pop (High CTR)
+                    ctx.shadowColor = 'rgba(0, 0, 0, 0.7)';
+                    ctx.shadowBlur = 15 * scaleFactor;
+                    ctx.shadowOffsetX = 0;
+                    ctx.shadowOffsetY = 8 * scaleFactor;
+                    drawCircle(centerX, centerY, playSize, '#dc2626', 'transparent', 0, 0);
+                    ctx.shadowBlur = 0; // reset
+                    ctx.shadowOffsetY = 0;
+                    drawPlayIcon(centerX, centerY + (playSize*0.04), playSize * 0.55, '#ffffff');
+                    break;
+            }
+
             ctx.restore();
+        }
 
-            if (state.tintAmount > 0) {
-                ctx.fillStyle = `rgba(0, 0, 0, ${state.tintAmount / 100})`;
-                ctx.fillRect(0, 0, width, height);
-            }
-
-            const previewWrapper = document.getElementById('previewWrapper');
-            const wrapperRect = previewWrapper.getBoundingClientRect();
-            const scaleX = width / wrapperRect.width;
-            const scaleY = height / wrapperRect.height;
-
-            if (state.playActive) {
-                const rect = playButtonOverlay.getBoundingClientRect();
-                const x = (rect.left - wrapperRect.left) * scaleX;
-                const y = (rect.top - wrapperRect.top) * scaleY;
-                const size = rect.width * scaleX;
-
+        function drawCircle(x, y, radius, fillColor, shadowColor, lineWidth, strokeColor) {
+            if (shadowColor && shadowColor !== 'transparent') {
                 ctx.save();
-                ctx.shadowColor = 'rgba(0, 0, 0, 0.5)';
-                ctx.shadowBlur = 20 * scaleX;
-                
-                if (state.playStyle === 'modernRed') {
-                    ctx.fillStyle = '#dc2626';
-                    ctx.beginPath();
-                    ctx.roundRect(x, y, size, size, size * 0.25);
-                    ctx.fill();
-                } else if (state.playStyle === 'classicWhite') {
-                    ctx.fillStyle = '#ffffff';
-                    ctx.beginPath();
-                    ctx.arc(x + size/2, y + size/2, size/2, 0, Math.PI * 2);
-                    ctx.fill();
-                } else {
-                    ctx.fillStyle = '#06b6d4';
-                    ctx.beginPath();
-                    ctx.arc(x + size/2, y + size/2, size/2, 0, Math.PI * 2);
-                    ctx.fill();
-                }
-
-                ctx.fillStyle = (state.playStyle === 'classicWhite' || state.playStyle === 'neonCyan') ? '#090d16' : '#ffffff';
-                ctx.font = `bold ${size * 0.35}px "Font Awesome 6 Free"`;
-                ctx.textAlign = 'center';
-                ctx.textBaseline = 'middle';
-                ctx.fillText('\uf04b', x + size/2, y + size/2);
-                ctx.restore();
-            }
-
-            if (state.textActive) {
-                const rect = textOverlayBox.getBoundingClientRect();
-                const x = ((rect.left - wrapperRect.left) + rect.width / 2) * scaleX;
-                const y = (rect.top - wrapperRect.top) * scaleY;
-
-                ctx.save();
-                ctx.fillStyle = state.fontColor;
-                ctx.textAlign = 'center';
-                
-                ctx.font = `800 ${24 * scaleX}px Inter, sans-serif`;
-                ctx.shadowColor = 'rgba(0,0,0,0.8)';
-                ctx.shadowBlur = 10 * scaleX;
-                ctx.fillText(state.titleText, x, y + (24 * scaleX));
-
-                ctx.font = `500 ${14 * scaleX}px Inter, sans-serif`;
-                ctx.fillText(state.descText, x, y + (52 * scaleX));
-                ctx.restore();
-            }
-
-            state.socialStickers.forEach(sticker => {
-                const el = socialStickersContainer.querySelector(`[data-id="${sticker.id}"]`);
-                if (!el) return;
-                const rect = el.getBoundingClientRect();
-                const x = (rect.left - wrapperRect.left) * scaleX;
-                const y = (rect.top - wrapperRect.top) * scaleY;
-                const boxW = rect.width * scaleX;
-                const boxH = rect.height * scaleY;
-
-                ctx.save();
-                ctx.fillStyle = 'rgba(15, 23, 42, 0.9)';
+                ctx.shadowColor = shadowColor;
+                ctx.shadowBlur = 10;
+                ctx.shadowOffsetY = 4;
                 ctx.beginPath();
-                ctx.roundRect(x, y, boxW, boxH, boxH * 0.3);
+                ctx.arc(x, y, radius, 0, 2 * Math.PI);
+                ctx.fillStyle = fillColor;
                 ctx.fill();
-
-                ctx.fillStyle = getSocialColor(sticker.platform);
-                ctx.font = `${state.globalStickerSize * scaleX}px "Font Awesome 6 Brands"`;
-                ctx.textAlign = 'center';
-                ctx.textBaseline = 'middle';
-                ctx.fillText(getSocialUnicode(sticker.platform), x + boxW/2, y + boxH/2);
                 ctx.restore();
-            });
-
-            if (state.sensitiveActive) {
-                const rect = sensitiveOverlay.getBoundingClientRect();
-                const x = ((rect.left - wrapperRect.left) + rect.width / 2) * scaleX;
-                const y = (rect.top - wrapperRect.top) * scaleY;
-
-                ctx.save();
-                ctx.fillStyle = '#ffffff';
-                ctx.textAlign = 'center';
-                ctx.shadowColor = 'rgba(0, 0, 0, 0.8)';
-                ctx.shadowBlur = 12 * scaleX;
-
-                ctx.font = `${32 * scaleX}px "Font Awesome 6 Free"`;
-                ctx.fillText('\uf070', x, y + (20 * scaleX));
-
-                ctx.font = `800 ${28 * scaleX}px Inter, sans-serif`;
-                ctx.fillText('Sensitive Content', x, y + (62 * scaleX));
-
-                ctx.font = `400 ${13 * scaleX}px Inter, sans-serif`;
-                ctx.fillStyle = '#f1f5f9';
-                ctx.fillText('This content may contain material that some viewers', x, y + (92 * scaleX));
-                ctx.fillText('could find sensitive, disturbing, or inappropriate.', x, y + (112 * scaleX));
-                ctx.restore();
+            } else {
+                ctx.beginPath();
+                ctx.arc(x, y, radius, 0, 2 * Math.PI);
+                ctx.fillStyle = fillColor;
+                ctx.fill();
             }
 
-            const dataURL = canvas.toDataURL('image/jpeg', 0.95);
+            if (lineWidth > 0) {
+                ctx.beginPath();
+                ctx.arc(x, y, radius, 0, 2 * Math.PI);
+                ctx.lineWidth = lineWidth;
+                ctx.strokeStyle = strokeColor;
+                ctx.stroke();
+            }
+        }
+
+        function drawCustomFillCircle(x, y, radius, fillStyle, shadowColor) {
+            ctx.save();
+            ctx.shadowColor = shadowColor;
+            ctx.shadowBlur = 12;
+            ctx.shadowOffsetY = 4;
+            ctx.beginPath();
+            ctx.arc(x, y, radius, 0, 2 * Math.PI);
+            ctx.fillStyle = fillStyle;
+            ctx.fill();
+            ctx.restore();
+        }
+
+        function drawPlayIcon(x, y, size, color) {
+            ctx.beginPath();
+            const width = size * 0.9;
+            const height = size;
+            
+            // Sedikit digeser ke kanan secara visual agar persis di tengah lingkaran
+            const offsetX = width * 0.1;
+
+            ctx.moveTo(x - width / 2 + offsetX, y - height / 2);
+            ctx.lineTo(x - width / 2 + offsetX, y + height / 2);
+            ctx.lineTo(x + width / 2 + offsetX, y);
+            ctx.closePath();
+
+            ctx.fillStyle = color;
+            ctx.fill();
+        }
+
+        downloadBtn.addEventListener('click', function() {
+            if (!imageLoaded) return;
+            const dataURL = canvas.toDataURL('image/png');
             const link = document.createElement('a');
-            link.download = state.fileName;
+            link.download = 'pro-thumbnail-play.png';
             link.href = dataURL;
             link.click();
-            showNotification('Thumbnail berhasil diunduh dalam format HD!', 'Sukses');
         });
-
-        function getSocialUnicode(platform) {
-            switch(platform) {
-                case 'youtube': return '\uf167';
-                case 'whatsapp': return '\uf232';
-                case 'tiktok': return '\ue07b';
-                case 'instagram': return '\uf16d';
-                case 'facebook': return '\uf09a';
-                case 'twitter': return '\uf099';
-                case 'telegram': return '\uf2c6';
-                case 'tinder': return '\uf4d9';
-                case 'onlyfans': return '\ue2d3';
-                default: return '\uf167';
-            }
-        }
-
-        function resetAllSettings() {
-            blurRange.value = 15;
-            tintRange.value = 15;
-            sensitiveToggle.checked = false;
-            playToggle.checked = false;
-            textToggle.checked = false;
-            globalStickerSizeRange.value = 32;
-            state.globalStickerSize = 32;
-            stickerSizeValueLabel.textContent = '32px';
-            
-            state.socialStickers = [];
-            renderSocialStickers();
-
-            sensitiveOverlay.classList.add('hidden');
-            playButtonOverlay.classList.add('hidden');
-            playButtonOptions.classList.add('hidden');
-            textOverlayBox.classList.add('hidden');
-            textOptionsContainer.classList.add('hidden');
-
-            sourceImagePreview.style.filter = `blur(15px)`;
-            tintOverlay.style.opacity = 0.15;
-            showNotification('Pengaturan direset ke awal.', 'Info');
-        }
-
-        function showNotification(message, title = 'Berhasil') {
-            const toast = document.getElementById('toastNotification');
-            document.getElementById('toastTitle').textContent = title;
-            document.getElementById('toastMessage').textContent = message;
-            toast.classList.remove('translate-y-24', 'opacity-0');
-            setTimeout(() => {
-                toast.classList.add('translate-y-24', 'opacity-0');
-            }, 3000);
-        }
     </script>
 </body>
 </html>
