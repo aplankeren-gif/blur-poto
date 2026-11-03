@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pro Play Button Studio v2.0</title>
+    <title>Pro Play Button Studio v2.1 + HD Enhancer</title>
     <style>
         :root {
             --primary: #2563eb;
@@ -13,6 +13,7 @@
             --text: #f8fafc;
             --text-muted: #94a3b8;
             --border: #1f2937;
+            --neon-green: #10b981;
         }
 
         * {
@@ -57,7 +58,9 @@
         }
 
         label {
-            display: block;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             font-size: 0.8rem;
             font-weight: 600;
             margin-bottom: 0.5rem;
@@ -91,6 +94,30 @@
         input[type="range"] {
             flex: 1;
             accent-color: var(--primary);
+        }
+
+        .checkbox-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: #0d1117;
+            border: 1px solid var(--border);
+            padding: 10px 14px;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .checkbox-container input {
+            width: 18px;
+            height: 18px;
+            accent-color: var(--primary);
+            cursor: pointer;
+        }
+
+        .checkbox-container span {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #38bdf8;
         }
 
         .preview-container {
@@ -139,7 +166,7 @@
 <body>
 
     <div class="container">
-        <h1>Pro Play Button Studio v2.0</h1>
+        <h1>Pro Play Button Studio v2.1 + HD Enhancer</h1>
 
         <!-- Unggah Gambar -->
         <div class="control-group">
@@ -147,7 +174,15 @@
             <input type="file" id="uploadImage" accept="image/*">
         </div>
 
-        <!-- Pilihan Gaya Tombol Play Pro (15 Variasi) -->
+        <!-- Opsi HD Enhancer -->
+        <div class="control-group">
+            <label class="checkbox-container">
+                <input type="checkbox" id="hdCheckbox" checked>
+                <span>AKTIFKAN HD UPSCALE (Pertajam & Cegah Pecah saat Download)</span>
+            </label>
+        </div>
+
+        <!-- Pilihan Gaya Tombol Play Pro -->
         <div class="control-group">
             <label for="styleSelect">Pilih Gaya Tombol Play (Pro Styles):</label>
             <select id="styleSelect">
@@ -165,7 +200,7 @@
                 <option value="12">12. Electric Blue Matrix (Tech Vibe)</option>
                 <option value="13">13. Soft Pastel Blur (Modern Aesthetic)</option>
                 <option value="14">14. Double Ring Tech (Futuristic HUD Style)</option>
-                <option value="15">15. Drop Shadow Pop (High CTR Thumbnail Style)</option>
+                <option value="15" selected>15. Drop Shadow Pop (High CTR Thumbnail Style)</option>
             </select>
         </div>
 
@@ -173,8 +208,8 @@
         <div class="control-group">
             <label for="sizeRange">Ukuran Tombol Play:</label>
             <div class="range-container">
-                <input type="range" id="sizeRange" min="30" max="180" value="80">
-                <span id="sizeVal">80px</span>
+                <input type="range" id="sizeRange" min="30" max="250" value="90">
+                <span id="sizeVal">90px</span>
             </div>
         </div>
 
@@ -184,7 +219,7 @@
         </div>
 
         <!-- Tombol Download -->
-        <button id="downloadBtn" class="btn">Unduh Hasil Thumbnail (PNG)</button>
+        <button id="downloadBtn" class="btn">Unduh Thumbnail HD (PNG)</button>
     </div>
 
     <script>
@@ -192,6 +227,7 @@
         const styleSelect = document.getElementById('styleSelect');
         const sizeRange = document.getElementById('sizeRange');
         const sizeVal = document.getElementById('sizeVal');
+        const hdCheckbox = document.getElementById('hdCheckbox');
         const canvas = document.getElementById('imageCanvas');
         const ctx = canvas.getContext('2d');
         const downloadBtn = document.getElementById('downloadBtn');
@@ -200,7 +236,7 @@
         let imageLoaded = false;
 
         function loadDefaultImage() {
-            currentImage.src = 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=800&auto=format&fit=crop';
+            currentImage.src = 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=1200&auto=format&fit=crop';
             currentImage.crossOrigin = "anonymous";
             currentImage.onload = function() {
                 imageLoaded = true;
@@ -226,124 +262,140 @@
         });
 
         styleSelect.addEventListener('change', () => { if (imageLoaded) drawCanvas(); });
+        hdCheckbox.addEventListener('change', () => { if (imageLoaded) drawCanvas(); });
         sizeRange.addEventListener('input', function() {
             sizeVal.textContent = this.value + 'px';
             if (imageLoaded) drawCanvas();
         });
 
         function drawCanvas() {
-            canvas.width = currentImage.naturalWidth;
-            canvas.height = currentImage.naturalHeight;
+            let targetWidth = currentImage.naturalWidth;
+            let targetHeight = currentImage.naturalHeight;
+
+            // Fitur HD Enhancer / Upscaler (jika diaktifkan dan resolusi asli agak kecil)
+            if (hdCheckbox.checked) {
+                const minHDWidth = 1200; // Standar minimal kualitas HD
+                if (targetWidth < minHDWidth) {
+                    const ratio = minHDWidth / targetWidth;
+                    targetWidth = minHDWidth;
+                    targetHeight = Math.round(currentImage.naturalHeight * ratio);
+                }
+            }
+
+            canvas.width = targetWidth;
+            canvas.height = targetHeight;
+
+            // Menggunakan teknik rendering gambar berkualitas tinggi (Smoothing High)
+            ctx.imageSmoothingEnabled = true;
+            ctx.imageSmoothingQuality = 'high';
 
             ctx.clearRect(0, 0, canvas.width, canvas.height);
-            ctx.drawImage(currentImage, 0, 0);
+            ctx.drawImage(currentImage, 0, 0, targetWidth, targetHeight);
 
+            // Skala proporsional untuk tombol play berdasarkan ukuran canvas HD
             const scaleFactor = canvas.width / 800;
             const baseSize = parseInt(sizeRange.value);
-            const playSize = baseSize * Math.max(scaleFactor, 0.4);
+            const playSize = baseSize * Math.max(scaleFactor, 0.5);
             const centerX = canvas.width / 2;
             const centerY = canvas.height / 2;
             const style = styleSelect.value;
 
             ctx.save();
 
-            // Render berdasarkan 15 pilihan gaya pro
             switch(style) {
-                case '1': // YouTube Classic
-                    drawCircle(centerX, centerY, playSize, '#ff0000', 'rgba(0,0,0,0.3)', 0, 0);
-                    drawPlayIcon(centerX, centerY + (playSize*0.05), playSize * 0.55, '#ffffff');
+                case '1':
+                    drawCircle(centerX, centerY, playSize, '#ff0000', 'rgba(0,0,0,0.3)', 0, 0, scaleFactor);
+                    drawPlayIcon(centerX, centerY + (playSize*0.05), playSize * 0.55, '#ffffff', scaleFactor);
                     break;
-                case '2': // Netflix Style
-                    drawCircle(centerX, centerY, playSize, '#b91c1c', 'rgba(0,0,0,0.5)', 0, 0);
-                    drawPlayIcon(centerX, centerY, playSize * 0.5, '#ffffff');
+                case '2':
+                    drawCircle(centerX, centerY, playSize, '#b91c1c', 'rgba(0,0,0,0.5)', 0, 0, scaleFactor);
+                    drawPlayIcon(centerX, centerY, playSize * 0.5, '#ffffff', scaleFactor);
                     break;
-                case '3': // Glassmorphism
-                    drawCircle(centerX, centerY, playSize, 'rgba(255, 255, 255, 0.25)', 'rgba(0,0,0,0.3)', 2 * scaleFactor, 'rgba(255,255,255,0.6)');
-                    drawPlayIcon(centerX, centerY, playSize * 0.5, '#ffffff');
+                case '3':
+                    drawCircle(centerX, centerY, playSize, 'rgba(255, 255, 255, 0.25)', 'rgba(0,0,0,0.3)', 2 * scaleFactor, 'rgba(255,255,255,0.6)', scaleFactor);
+                    drawPlayIcon(centerX, centerY, playSize * 0.5, '#ffffff', scaleFactor);
                     break;
-                case '4': // Cyberpunk Cyan Glow
+                case '4':
                     ctx.shadowColor = '#06b6d4';
                     ctx.shadowBlur = 20 * scaleFactor;
-                    drawCircle(centerX, centerY, playSize, '#090d16', '#06b6d4', 3 * scaleFactor, '#06b6d4');
-                    ctx.shadowBlur = 0; // reset
-                    drawPlayIcon(centerX, centerY, playSize * 0.5, '#06b6d4');
+                    drawCircle(centerX, centerY, playSize, '#090d16', '#06b6d4', 3 * scaleFactor, '#06b6d4', scaleFactor);
+                    ctx.shadowBlur = 0;
+                    drawPlayIcon(centerX, centerY, playSize * 0.5, '#06b6d4', scaleFactor);
                     break;
-                case '5': // Neon Crimson Glow
+                case '5':
                     ctx.shadowColor = '#ef4444';
                     ctx.shadowBlur = 25 * scaleFactor;
-                    drawCircle(centerX, centerY, playSize, '#110505', '#ef4444', 3 * scaleFactor, '#ef4444');
+                    drawCircle(centerX, centerY, playSize, '#110505', '#ef4444', 3 * scaleFactor, '#ef4444', scaleFactor);
                     ctx.shadowBlur = 0;
-                    drawPlayIcon(centerX, centerY, playSize * 0.5, '#ef4444');
+                    drawPlayIcon(centerX, centerY, playSize * 0.5, '#ef4444', scaleFactor);
                     break;
-                case '6': // Minimalist Solid White
-                    drawCircle(centerX, centerY, playSize, '#ffffff', 'rgba(0,0,0,0.4)', 0, 0);
-                    drawPlayIcon(centerX, centerY, playSize * 0.5, '#0f172a');
+                case '6':
+                    drawCircle(centerX, centerY, playSize, '#ffffff', 'rgba(0,0,0,0.4)', 0, 0, scaleFactor);
+                    drawPlayIcon(centerX, centerY, playSize * 0.5, '#0f172a', scaleFactor);
                     break;
-                case '7': // Dark Luxury Gold
-                    drawCircle(centerX, centerY, playSize, '#1c1917', '#d97706', 3 * scaleFactor, '#d97706');
-                    drawPlayIcon(centerX, centerY, playSize * 0.5, '#fbbf24');
+                case '7':
+                    drawCircle(centerX, centerY, playSize, '#1c1917', '#d97706', 3 * scaleFactor, '#d97706', scaleFactor);
+                    drawPlayIcon(centerX, centerY, playSize * 0.5, '#fbbf24', scaleFactor);
                     break;
-                case '8': // Emerald Green Pro
-                    drawCircle(centerX, centerY, playSize, '#065f46', 'rgba(0,0,0,0.4)', 2 * scaleFactor, '#34d399');
-                    drawPlayIcon(centerX, centerY, playSize * 0.5, '#ffffff');
+                case '8':
+                    drawCircle(centerX, centerY, playSize, '#065f46', 'rgba(0,0,0,0.4)', 2 * scaleFactor, '#34d399', scaleFactor);
+                    drawPlayIcon(centerX, centerY, playSize * 0.5, '#ffffff', scaleFactor);
                     break;
-                case '9': // Ultra Thin Border Ring
-                    drawCircle(centerX, centerY, playSize, 'rgba(0,0,0,0.4)', 'rgba(255,255,255,0.8)', 2 * scaleFactor, 'rgba(255,255,255,0.8)');
-                    drawPlayIcon(centerX, centerY, playSize * 0.5, '#ffffff');
+                case '9':
+                    drawCircle(centerX, centerY, playSize, 'rgba(0,0,0,0.4)', 'rgba(255,255,255,0.8)', 2 * scaleFactor, 'rgba(255,255,255,0.8)', scaleFactor);
+                    drawPlayIcon(centerX, centerY, playSize * 0.5, '#ffffff', scaleFactor);
                     break;
-                case '10': // Solid Black Minimal
-                    drawCircle(centerX, centerY, playSize, '#090d16', 'rgba(0,0,0,0.6)', 2 * scaleFactor, '#334155');
-                    drawPlayIcon(centerX, centerY, playSize * 0.5, '#f8fafc');
+                case '10':
+                    drawCircle(centerX, centerY, playSize, '#090d16', 'rgba(0,0,0,0.6)', 2 * scaleFactor, '#334155', scaleFactor);
+                    drawPlayIcon(centerX, centerY, playSize * 0.5, '#f8fafc', scaleFactor);
                     break;
-                case '11': // Gradient Sunset
+                case '11':
                     const grad1 = ctx.createLinearGradient(centerX - playSize, centerY - playSize, centerX + playSize, centerY + playSize);
                     grad1.addColorStop(0, '#f97316');
                     grad1.addColorStop(1, '#db2777');
-                    drawCustomFillCircle(centerX, centerY, playSize, grad1, 'rgba(0,0,0,0.4)');
-                    drawPlayIcon(centerX, centerY, playSize * 0.5, '#ffffff');
+                    drawCustomFillCircle(centerX, centerY, playSize, grad1, 'rgba(0,0,0,0.4)', scaleFactor);
+                    drawPlayIcon(centerX, centerY, playSize * 0.5, '#ffffff', scaleFactor);
                     break;
-                case '12': // Electric Blue Matrix
+                case '12':
                     const grad2 = ctx.createLinearGradient(centerX - playSize, centerY - playSize, centerX + playSize, centerY + playSize);
                     grad2.addColorStop(0, '#3b82f6');
                     grad2.addColorStop(1, '#1d4ed8');
-                    drawCustomFillCircle(centerX, centerY, playSize, grad2, 'rgba(0,0,0,0.5)');
-                    drawPlayIcon(centerX, centerY, playSize * 0.5, '#ffffff');
+                    drawCustomFillCircle(centerX, centerY, playSize, grad2, 'rgba(0,0,0,0.5)', scaleFactor);
+                    drawPlayIcon(centerX, centerY, playSize * 0.5, '#ffffff', scaleFactor);
                     break;
-                case '13': // Soft Pastel Blur
-                    drawCircle(centerX, centerY, playSize, 'rgba(255,255,255,0.85)', 'rgba(0,0,0,0.2)', 0, 0);
-                    drawPlayIcon(centerX, centerY, playSize * 0.5, '#4f46e5');
+                case '13':
+                    drawCircle(centerX, centerY, playSize, 'rgba(255,255,255,0.85)', 'rgba(0,0,0,0.2)', 0, 0, scaleFactor);
+                    drawPlayIcon(centerX, centerY, playSize * 0.5, '#4f46e5', scaleFactor);
                     break;
-                case '14': // Double Ring Tech
-                    drawCircle(centerX, centerY, playSize, '#0f172a', 'rgba(0,0,0,0.5)', 2 * scaleFactor, '#3b82f6');
-                    // Ring kedua di dalam
+                case '14':
+                    drawCircle(centerX, centerY, playSize, '#0f172a', 'rgba(0,0,0,0.5)', 2 * scaleFactor, '#3b82f6', scaleFactor);
                     ctx.beginPath();
                     ctx.arc(centerX, centerY, playSize * 0.8, 0, 2 * Math.PI);
                     ctx.strokeStyle = 'rgba(59, 130, 246, 0.4)';
                     ctx.lineWidth = 1 * scaleFactor;
                     ctx.stroke();
-                    drawPlayIcon(centerX, centerY, playSize * 0.45, '#3b82f6');
+                    drawPlayIcon(centerX, centerY, playSize * 0.45, '#3b82f6', scaleFactor);
                     break;
-                case '15': // Drop Shadow Pop (High CTR)
+                case '15':
                     ctx.shadowColor = 'rgba(0, 0, 0, 0.7)';
                     ctx.shadowBlur = 15 * scaleFactor;
-                    ctx.shadowOffsetX = 0;
                     ctx.shadowOffsetY = 8 * scaleFactor;
-                    drawCircle(centerX, centerY, playSize, '#dc2626', 'transparent', 0, 0);
-                    ctx.shadowBlur = 0; // reset
+                    drawCircle(centerX, centerY, playSize, '#dc2626', 'transparent', 0, 0, scaleFactor);
+                    ctx.shadowBlur = 0;
                     ctx.shadowOffsetY = 0;
-                    drawPlayIcon(centerX, centerY + (playSize*0.04), playSize * 0.55, '#ffffff');
+                    drawPlayIcon(centerX, centerY + (playSize*0.04), playSize * 0.55, '#ffffff', scaleFactor);
                     break;
             }
 
             ctx.restore();
         }
 
-        function drawCircle(x, y, radius, fillColor, shadowColor, lineWidth, strokeColor) {
+        function drawCircle(x, y, radius, fillColor, shadowColor, lineWidth, strokeColor, sf) {
             if (shadowColor && shadowColor !== 'transparent') {
                 ctx.save();
                 ctx.shadowColor = shadowColor;
-                ctx.shadowBlur = 10;
-                ctx.shadowOffsetY = 4;
+                ctx.shadowBlur = 10 * sf;
+                ctx.shadowOffsetY = 4 * sf;
                 ctx.beginPath();
                 ctx.arc(x, y, radius, 0, 2 * Math.PI);
                 ctx.fillStyle = fillColor;
@@ -365,11 +417,11 @@
             }
         }
 
-        function drawCustomFillCircle(x, y, radius, fillStyle, shadowColor) {
+        function drawCustomFillCircle(x, y, radius, fillStyle, shadowColor, sf) {
             ctx.save();
             ctx.shadowColor = shadowColor;
-            ctx.shadowBlur = 12;
-            ctx.shadowOffsetY = 4;
+            ctx.shadowBlur = 12 * sf;
+            ctx.shadowOffsetY = 4 * sf;
             ctx.beginPath();
             ctx.arc(x, y, radius, 0, 2 * Math.PI);
             ctx.fillStyle = fillStyle;
@@ -377,12 +429,10 @@
             ctx.restore();
         }
 
-        function drawPlayIcon(x, y, size, color) {
+        function drawPlayIcon(x, y, size, color, sf) {
             ctx.beginPath();
             const width = size * 0.9;
             const height = size;
-            
-            // Sedikit digeser ke kanan secara visual agar persis di tengah lingkaran
             const offsetX = width * 0.1;
 
             ctx.moveTo(x - width / 2 + offsetX, y - height / 2);
@@ -396,9 +446,10 @@
 
         downloadBtn.addEventListener('click', function() {
             if (!imageLoaded) return;
-            const dataURL = canvas.toDataURL('image/png');
+            // Ekspor hasil dengan kualitas kompresi PNG maksimum tanpa kehilangan piksel
+            const dataURL = canvas.toDataURL('image/png', 1.0);
             const link = document.createElement('a');
-            link.download = 'pro-thumbnail-play.png';
+            link.download = 'pro-thumbnail-hd.png';
             link.href = dataURL;
             link.click();
         });
